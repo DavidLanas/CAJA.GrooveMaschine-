@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "comment": "Palabras clave para clasificar samples por nombre de archivo y de carpetas. Se normaliza todo: sin mayusculas, sin acentos, separadores y camelCase como espacios, plural -s quitado. 'strong' = palabras claras; 'weak' = pistas debiles (solo cuentan si no hay ninguna 'strong' en la ruta). Gana la coincidencia con mas palabras, luego la mas larga, luego la del archivo sobre la de la carpeta.",
+  "pieces": {
+    "kick":   { "strong": ["kick", "bombo", "bass drum", "bassdrum", "kik", "bd", "bombo 1", "kick 1"], "weak": ["bass", "808", "boom"] },
+    "snare":  { "strong": ["snare", "caja", "sd", "snr", "redoblante", "snare drum", "caja clara"], "weak": [] },
+    "ch":     { "strong": ["closed hat", "hat closed", "closed hihat", "hihat closed", "hi hat closed", "closed hi hat", "hh closed", "closed hh", "chh", "hat cerrado", "hi hat cerrado", "hihat cerrado", "charles cerrado", "cerrado hat", "hat cerr"], "weak": ["ch", "closed", "cerrado", "hat", "hihat", "hi hat", "hh", "charles", "chaff"] },
+    "oh":     { "strong": ["open hat", "hat open", "open hihat", "hihat open", "hi hat open", "open hi hat", "hh open", "open hh", "ohh", "hat abierto", "hi hat abierto", "hihat abierto", "charles abierto", "abierto hat", "hat ab"], "weak": ["oh", "open", "abierto"] },
+    "kick2":  { "strong": ["kick sec", "kick secundario", "kick secondary", "kick alt", "kick b", "kick 2nd", "bombo sec", "bombo secundario", "kick2", "kick 2"], "weak": [] },
+    "sn2":    { "strong": ["snare sec", "snare secundaria", "snare secondary", "snare alt", "snare b", "snare 2nd", "caja sec", "caja secundaria", "snare2", "snare 2"], "weak": [] },
+    "ch2":    { "strong": ["closed hat 2", "closed hat sec", "hat cerrado 2", "hat cerrado sec", "chh2", "chh 2", "closed hat b", "closed hat alt"], "weak": [] },
+    "oh2":    { "strong": ["open hat 2", "open hat sec", "hat abierto 2", "hat abierto sec", "ohh2", "ohh 2", "open hat b", "open hat alt"], "weak": [] },
+    "egg":    { "strong": ["egg", "egg shaker", "huevo", "huevito", "huevo shaker", "eggshaker"], "weak": [] },
+    "clap":   { "strong": ["clap", "handclap", "hand clap", "palmas", "palma", "aplauso", "clp", "claps"], "weak": [] },
+    "rim":    { "strong": ["rim", "rimshot", "rim shot", "sidestick", "side stick", "rimclick", "rim click", "aro", "cross stick", "crossstick", "cross stick"], "weak": [] },
+    "ride":   { "strong": ["ride", "ride cymbal", "ridecymbal", "platillo ride"], "weak": [] },
+    "shaker": { "strong": ["shaker", "maraca", "maracas", "shk", "cabasa", "sonaja", "shakers"], "weak": [] },
+    "tom1":   { "strong": ["tom 1", "tom1", "tom high", "high tom", "hi tom", "tom hi", "tom alto", "tom agudo", "tom h"], "weak": ["tom"] },
+    "tom2":   { "strong": ["tom 2", "tom2", "tom mid", "mid tom", "tom medio", "tom m", "tom med"], "weak": [] },
+    "tom3":   { "strong": ["tom 3", "tom3", "tom low", "low tom", "floor tom", "tom floor", "tom bajo", "tom grave", "tom l", "tom piso"], "weak": [] },
+    "crash":  { "strong": ["crash", "crash cymbal", "platillo crash", "crash 1", "crash1"], "weak": ["cymbal", "platillo", "splash", "china"] },
+    "cowbell":{ "strong": ["cowbell", "cencerro", "cow bell", "cowb"], "weak": ["bell", "campana"] },
+    "congaH": { "strong": ["conga alta", "conga high", "conga hi", "high conga", "conga h", "conga open", "conga abierta", "quinto", "conga slap"], "weak": ["conga"] },
+    "congaL": { "strong": ["conga baja", "conga low", "low conga", "conga l", "conga bass", "conga grave", "tumba", "conga lo"], "weak": [] },
+    "clave":  { "strong": ["clave", "claves", "clv"], "weak": [] },
+    "timbalH":{ "strong": ["timbal alto", "timbal high", "timbal hi", "timbale alto", "timbale high", "timbale hi", "timbales alto", "high timbale", "hi timbale", "timbal h"], "weak": ["timbal", "timbale", "timbales", "timbale"] },
+    "timbalL":{ "strong": ["timbal bajo", "timbal low", "timbal lo", "timbale bajo", "timbale low", "timbale lo", "low timbale", "lo timbale", "timbal l"], "weak": [] },
+    "guiro":  { "strong": ["guiro", "guiro corto", "guiro largo", "guiro short", "guiro long", "guira", "scraper"], "weak": [] },
+    "pandereta": { "strong": ["pandereta", "tambourine", "tamborin", "tamb", "pandero", "panderola", "tambourin", "tamburin"], "weak": [] }
+  }
+}

@@ -1,0 +1,622 @@
+Gfunk|0|8|92|987654321|80|0|0
+Gfunk|0|2|18|7|87|14|1
+Gfunk|0|1|18|7|82|14|0
+Gfunk|0|2|18|987654321|95|14|1
+Gfunk|0|2|50|4294967295|61|36|1
+Gfunk|0|8|50|12345|64|36|1
+Gfunk|0|8|50|semilla larga 2026|8|100|1
+Gfunk|0|1|8|semilla larga 2026|83|100|0
+Gfunk|8|2|50|7|68|0|0
+Gfunk|129|1|50|7|70|36|0
+Gfunk|144|2|0|12345|12|0|0
+Gfunk|136|2|100|0|25|36|0
+Gfunk|0|4|8|12345|77|0|1
+Gfunk|0|4|8|7|94|36|1
+Gfunk|132|2|8|7|29|100|0
+Gfunk|0|4|0|7|75|0|0
+Gfunk|448|8|92|0|32|100|0
+Gfunk|452|1|18|hola|49|0|1
+Gfunk|12|1|92|hola|64|36|1
+Gfunk|33|1|8|semilla larga 2026|93|14|1
+Gfunk|0|2|0|0|86|14|1
+Gfunk|3|8|50|semilla larga 2026|13|100|1
+Gfunk|208|2|18|12345|93|14|0
+Gfunk|208|2|100|semilla larga 2026|26|0|1
+Gfunk|456|2|100|12345|48|100|1
+Gfunk|56|1|18|0|78|0|1
+Gfunk|176|8|92|0|6|0|0
+Gfunk|16|2|50|hola|3|36|0
+Gfunk|16|2|18|4294967295|97|14|1
+Gfunk|64|2|18|12345|84|14|1
+Gfunk|141|2|8|hola|20|14|0
+Gfunk|256|4|8|hola|3|100|0
+Gfunk|416|2|18|12345|37|14|0
+Gfunk|84|1|0|987654321|98|36|0
+Gfunk|4|2|50|0|63|14|0
+Gfunk|49|4|100|0|81|0|0
+Gfunk|66|8|50|4294967295|75|0|0
+Gfunk|56|4|8|0|63|36|1
+Gfunk|128|8|18|4294967295|0|14|1
+Gfunk|8|8|0|7|12|36|0
+Gneosoul|0|2|92|7|63|14|1
+Gneosoul|0|1|92|7|92|14|0
+Gneosoul|0|2|8|hola|93|0|0
+Gneosoul|0|2|18|4294967295|11|100|1
+Gneosoul|0|1|0|12345|79|14|0
+Gneosoul|0|1|0|7|72|100|1
+Gneosoul|0|1|0|hola|49|0|0
+Gneosoul|0|2|92|12345|22|14|1
+Gneosoul|8|2|8|semilla larga 2026|89|0|0
+Gneosoul|168|1|100|12345|32|36|1
+Gneosoul|292|4|50|4294967295|73|0|1
+Gneosoul|4|4|0|hola|12|0|1
+Gneosoul|122|4|100|hola|68|0|1
+Gneosoul|394|2|100|hola|20|14|0
+Gneosoul|64|1|92|7|25|36|0
+Gneosoul|136|8|8|0|4|14|1
+Gneosoul|48|4|8|semilla larga 2026|45|36|0
+Gneosoul|257|1|92|12345|76|36|0
+Gneosoul|124|2|92|0|66|36|1
+Gneosoul|425|8|50|987654321|25|100|0
+Gneosoul|128|2|50|12345|57|14|0
+Gneosoul|1|4|50|7|81|14|1
+Gneosoul|276|8|100|12345|54|36|0
+Gneosoul|184|4|92|semilla larga 2026|48|36|0
+Gneosoul|1|1|8|987654321|83|14|1
+Gneosoul|66|4|50|hola|40|36|0
+Gneosoul|72|1|18|4294967295|56|36|1
+Gneosoul|0|1|18|7|51|0|1
+Gneosoul|260|4|100|semilla larga 2026|71|14|1
+Gneosoul|240|2|100|12345|93|14|1
+Gneosoul|53|2|92|12345|54|100|1
+Gneosoul|116|8|8|7|95|100|1
+Gneosoul|256|1|18|4294967295|29|36|0
+Gneosoul|321|2|50|7|58|14|1
+Gneosoul|320|8|100|12345|56|100|0
+Gneosoul|288|1|50|0|32|100|0
+Gneosoul|4|1|0|12345|8|0|1
+Gneosoul|266|1|18|7|70|100|1
+Gneosoul|66|2|92|12345|14|36|0
+Gneosoul|322|8|0|semilla larga 2026|97|14|1
+Grnb|0|2|50|semilla larga 2026|30|100|0
+Grnb|0|8|0|0|55|100|0
+Grnb|0|4|8|12345|3|36|0
+Grnb|0|4|18|12345|95|0|1
+Grnb|0|4|0|0|47|14|1
+Grnb|0|8|100|0|83|14|0
+Grnb|0|1|100|4294967295|73|0|0
+Grnb|0|2|100|12345|54|0|1
+Grnb|264|4|18|semilla larga 2026|39|0|1
+Grnb|24|1|100|12345|19|100|1
+Grnb|104|2|18|0|100|0|0
+Grnb|336|4|50|4294967295|40|14|0
+Grnb|384|4|92|semilla larga 2026|68|36|0
+Grnb|0|8|18|0|22|100|1
+Grnb|264|2|100|4294967295|36|100|1
+Grnb|10|8|92|12345|51|100|1
+Grnb|2|8|92|semilla larga 2026|54|14|0
+Grnb|0|2|100|4294967295|80|36|1
+Grnb|135|4|18|0|37|100|1
+Grnb|64|4|0|semilla larga 2026|39|14|1
+Grnb|1|4|8|4294967295|43|0|1
+Grnb|393|8|8|7|87|14|0
+Grnb|449|1|0|4294967295|75|14|1
+Grnb|297|8|18|12345|75|100|1
+Grnb|128|8|100|12345|17|0|1
+Grnb|49|8|0|4294967295|99|14|0
+Grnb|264|8|50|hola|31|14|0
+Grnb|80|4|100|987654321|45|14|1
+Grnb|20|1|18|0|6|100|1
+Grnb|83|2|100|4294967295|14|36|1
+Grnb|396|4|92|987654321|10|0|0
+Grnb|164|2|18|0|39|36|0
+Grnb|4|2|100|4294967295|97|0|1
+Grnb|64|8|50|0|72|36|1
+Grnb|32|1|0|987654321|73|0|1
+Grnb|18|2|0|7|49|14|1
+Grnb|64|1|18|12345|49|36|0
+Grnb|153|2|92|4294967295|46|36|0
+Grnb|342|4|50|987654321|1|14|1
+Grnb|288|2|100|semilla larga 2026|72|100|0
+Gafrobeat|0|2|50|0|57|100|0
+Gafrobeat|0|4|92|4294967295|5|0|0
+Gafrobeat|0|4|50|4294967295|84|14|1
+Gafrobeat|0|8|100|0|88|100|0
+Gafrobeat|0|8|92|4294967295|51|0|1
+Gafrobeat|0|4|50|987654321|51|0|1
+Gafrobeat|0|4|18|0|10|14|1
+Gafrobeat|0|8|50|987654321|26|0|1
+Gafrobeat|452|2|100|semilla larga 2026|12|100|1
+Gafrobeat|202|1|8|12345|67|36|1
+Gafrobeat|260|8|92|7|0|0|1
+Gafrobeat|0|8|18|4294967295|58|36|1
+Gafrobeat|260|4|0|semilla larga 2026|77|14|0
+Gafrobeat|340|8|0|0|11|14|0
+Gafrobeat|113|1|92|hola|75|0|1
+Gafrobeat|0|4|0|12345|87|14|0
+Gafrobeat|33|1|100|4294967295|77|100|1
+Gafrobeat|0|2|8|12345|67|14|0
+Gafrobeat|19|8|50|12345|4|14|0
+Gafrobeat|33|8|100|semilla larga 2026|62|0|0
+Gafrobeat|4|8|8|semilla larga 2026|5|36|0
+Gafrobeat|1|1|0|0|54|36|0
+Gafrobeat|28|1|0|987654321|45|100|1
+Gafrobeat|450|4|100|12345|70|36|1
+Gafrobeat|394|1|50|4294967295|11|100|0
+Gafrobeat|24|2|50|987654321|62|0|0
+Gafrobeat|144|2|100|0|3|36|0
+Gafrobeat|2|1|100|12345|65|0|0
+Gafrobeat|1|8|18|987654321|91|14|1
+Gafrobeat|336|2|92|12345|47|36|1
+Gafrobeat|416|8|0|12345|71|0|1
+Gafrobeat|81|8|0|7|96|36|0
+Gafrobeat|212|4|100|4294967295|77|0|1
+Gafrobeat|0|4|100|hola|50|0|1
+Gafrobeat|66|8|8|12345|97|36|1
+Gafrobeat|340|1|100|12345|13|100|0
+Gafrobeat|65|2|0|12345|43|100|0
+Gafrobeat|260|1|50|hola|24|100|0
+Gafrobeat|64|8|8|4294967295|34|14|1
+Gafrobeat|136|4|92|12345|71|36|0
+Gafrobeats|0|8|100|987654321|24|14|0
+Gafrobeats|0|8|18|7|29|100|1
+Gafrobeats|0|2|92|4294967295|96|100|0
+Gafrobeats|0|4|18|12345|86|100|1
+Gafrobeats|0|4|92|12345|38|36|1
+Gafrobeats|0|2|92|4294967295|58|100|1
+Gafrobeats|0|2|0|semilla larga 2026|95|0|0
+Gafrobeats|0|4|18|hola|56|14|1
+Gafrobeats|4|2|50|12345|81|100|0
+Gafrobeats|32|1|50|987654321|10|100|0
+Gafrobeats|0|2|50|4294967295|98|100|1
+Gafrobeats|48|8|50|12345|70|100|0
+Gafrobeats|10|4|100|7|12|36|1
+Gafrobeats|6|2|92|987654321|28|100|0
+Gafrobeats|32|4|18|hola|41|36|1
+Gafrobeats|10|4|18|4294967295|71|0|1
+Gafrobeats|2|2|100|12345|78|100|0
+Gafrobeats|81|4|8|987654321|35|14|0
+Gafrobeats|257|4|0|0|28|100|0
+Gafrobeats|37|1|100|4294967295|27|0|0
+Gafrobeats|280|4|100|4294967295|95|100|1
+Gafrobeats|20|8|100|semilla larga 2026|36|100|0
+Gafrobeats|100|8|100|0|96|0|0
+Gafrobeats|52|4|92|987654321|97|36|0
+Gafrobeats|272|2|50|semilla larga 2026|25|100|0
+Gafrobeats|1|4|0|4294967295|13|14|1
+Gafrobeats|16|8|50|hola|63|36|0
+Gafrobeats|3|2|18|0|45|0|0
+Gafrobeats|176|2|8|12345|2|14|1
+Gafrobeats|260|2|8|hola|62|0|1
+Gafrobeats|66|2|0|4294967295|6|36|1
+Gafrobeats|132|2|0|7|25|36|0
+Gafrobeats|69|8|50|hola|64|100|1
+Gafrobeats|0|2|100|987654321|48|0|0
+Gafrobeats|80|4|92|semilla larga 2026|34|0|1
+Gafrobeats|140|4|0|0|15|36|1
+Gafrobeats|48|8|50|hola|30|0|1
+Gafrobeats|20|4|100|hola|1|14|1
+Gafrobeats|0|2|92|hola|44|36|1
+Gafrobeats|256|2|8|987654321|20|0|1
+Gboombap|0|1|0|semilla larga 2026|56|36|1
+Gboombap|0|8|100|semilla larga 2026|50|14|0
+Gboombap|0|8|18|7|0|36|1
+Gboombap|0|1|8|0|89|0|1
+Gboombap|0|1|92|0|10|0|0
+Gboombap|0|8|18|0|15|14|0
+Gboombap|0|8|8|7|79|36|1
+Gboombap|0|8|8|4294967295|65|100|0
+Gboombap|8|1|0|hola|58|100|0
+Gboombap|138|1|100|987654321|90|14|1
+Gboombap|68|4|100|987654321|24|100|1
+Gboombap|66|1|0|7|55|0|1
+Gboombap|405|1|8|hola|60|100|1
+Gboombap|68|2|8|0|40|36|0
+Gboombap|1|8|92|4294967295|66|14|1
+Gboombap|8|8|18|12345|13|14|0
+Gboombap|392|8|100|0|7|14|0
+Gboombap|32|4|0|987654321|2|36|0
+Gboombap|67|2|18|4294967295|19|14|1
+Gboombap|9|4|18|7|83|14|1
+Gboombap|17|2|50|semilla larga 2026|15|0|1
+Gboombap|72|2|100|987654321|87|36|0
+Gboombap|416|4|92|12345|48|14|0
+Gboombap|16|1|0|12345|47|100|0
+Gboombap|208|8|18|semilla larga 2026|90|0|1
+Gboombap|74|8|50|hola|66|100|0
+Gboombap|26|1|18|0|72|36|0
+Gboombap|65|1|100|semilla larga 2026|58|36|1
+Gboombap|33|4|8|4294967295|45|0|1
+Gboombap|186|8|50|987654321|43|100|1
+Gboombap|0|8|92|4294967295|16|36|0
+Gboombap|20|2|100|12345|50|14|0
+Gboombap|416|4|8|7|22|100|0
+Gboombap|440|4|8|semilla larga 2026|36|0|1
+Gboombap|0|4|8|0|12|100|1
+Gboombap|324|2|100|7|44|36|1
+Gboombap|386|1|50|987654321|80|36|0
+Gboombap|74|4|0|7|100|100|0
+Gboombap|288|8|92|12345|77|0|1
+Gboombap|264|1|50|hola|5|36|1
+Ggfunk|0|2|100|0|69|14|0
+Ggfunk|0|4|50|4294967295|60|100|0
+Ggfunk|0|2|50|hola|21|100|1
+Ggfunk|0|2|8|hola|98|100|0
+Ggfunk|0|2|92|987654321|55|14|0
+Ggfunk|0|8|8|7|43|0|0
+Ggfunk|0|2|100|12345|53|0|1
+Ggfunk|0|2|18|hola|63|36|1
+Ggfunk|4|1|0|4294967295|19|36|0
+Ggfunk|20|4|8|hola|4|0|1
+Ggfunk|32|4|18|4294967295|70|100|1
+Ggfunk|165|2|100|0|32|14|0
+Ggfunk|33|4|50|12345|81|36|1
+Ggfunk|128|1|18|12345|37|0|0
+Ggfunk|417|8|0|4294967295|37|14|1
+Ggfunk|43|8|0|987654321|19|36|0
+Ggfunk|42|4|50|7|14|0|1
+Ggfunk|384|1|0|semilla larga 2026|20|0|0
+Ggfunk|156|8|0|12345|17|14|0
+Ggfunk|10|4|100|7|80|100|1
+Ggfunk|6|8|8|4294967295|2|0|1
+Ggfunk|17|1|18|7|4|0|1
+Ggfunk|32|4|100|4294967295|70|14|1
+Ggfunk|87|8|100|semilla larga 2026|78|0|1
+Ggfunk|32|4|8|4294967295|61|36|0
+Ggfunk|100|8|50|7|80|100|1
+Ggfunk|1|8|50|7|96|14|0
+Ggfunk|160|1|18|12345|66|0|0
+Ggfunk|464|8|8|12345|71|100|0
+Ggfunk|134|1|92|4294967295|90|36|0
+Ggfunk|48|1|92|hola|59|100|1
+Ggfunk|420|8|50|4294967295|24|14|1
+Ggfunk|18|2|8|12345|24|0|0
+Ggfunk|148|4|50|7|36|36|0
+Ggfunk|15|2|8|987654321|86|36|1
+Ggfunk|350|8|18|hola|100|14|0
+Ggfunk|140|2|100|semilla larga 2026|1|0|1
+Ggfunk|258|4|50|4294967295|26|36|1
+Ggfunk|3|1|50|hola|17|14|1
+Ggfunk|10|8|92|4294967295|13|100|1
+Gtrap|0|1|100|12345|92|36|1
+Gtrap|0|8|0|hola|4|100|1
+Gtrap|0|8|92|hola|17|0|1
+Gtrap|0|4|8|0|39|14|1
+Gtrap|0|4|8|0|9|36|0
+Gtrap|0|2|18|hola|65|100|1
+Gtrap|0|1|8|0|54|14|1
+Gtrap|0|2|0|0|71|14|1
+Gtrap|20|1|18|4294967295|59|14|1
+Gtrap|256|1|0|hola|42|0|0
+Gtrap|8|1|92|4294967295|76|0|1
+Gtrap|458|4|92|987654321|9|100|0
+Gtrap|84|2|0|semilla larga 2026|20|100|1
+Gtrap|140|4|18|hola|82|36|1
+Gtrap|260|8|92|semilla larga 2026|10|100|1
+Gtrap|329|4|92|7|95|14|0
+Gtrap|10|4|8|0|39|0|0
+Gtrap|385|4|50|12345|39|100|1
+Gtrap|20|1|100|semilla larga 2026|79|0|0
+Gtrap|1|2|92|semilla larga 2026|96|0|0
+Gtrap|16|4|92|4294967295|43|100|0
+Gtrap|184|4|18|semilla larga 2026|93|36|1
+Gtrap|129|8|92|semilla larga 2026|30|36|1
+Gtrap|25|8|0|4294967295|45|36|1
+Gtrap|0|8|50|12345|22|36|0
+Gtrap|328|8|0|987654321|57|100|0
+Gtrap|134|8|0|4294967295|77|0|0
+Gtrap|128|2|0|semilla larga 2026|70|36|1
+Gtrap|400|8|8|12345|76|0|0
+Gtrap|353|8|50|7|43|14|0
+Gtrap|140|2|8|4294967295|3|14|0
+Gtrap|18|1|18|hola|39|0|1
+Gtrap|279|2|50|987654321|43|100|1
+Gtrap|1|1|92|hola|67|100|0
+Gtrap|8|2|92|semilla larga 2026|13|36|1
+Gtrap|132|1|18|12345|45|0|0
+Gtrap|84|2|8|0|16|36|0
+Gtrap|328|2|100|4294967295|67|36|1
+Gtrap|64|1|8|987654321|7|100|0
+Gtrap|268|8|100|4294967295|38|36|1
+Gnewjack|0|1|8|hola|90|14|1
+Gnewjack|0|1|0|4294967295|57|14|0
+Gnewjack|0|1|100|0|17|100|1
+Gnewjack|0|4|100|7|57|36|1
+Gnewjack|0|2|100|987654321|9|100|0
+Gnewjack|0|2|50|987654321|91|0|1
+Gnewjack|0|1|100|4294967295|5|100|0
+Gnewjack|0|4|0|hola|69|14|0
+Gnewjack|11|4|92|semilla larga 2026|39|0|0
+Gnewjack|272|2|8|987654321|10|36|0
+Gnewjack|200|4|18|7|1|0|0
+Gnewjack|128|1|8|semilla larga 2026|71|14|1
+Gnewjack|128|1|18|987654321|61|36|1
+Gnewjack|328|4|92|987654321|53|36|1
+Gnewjack|64|8|8|12345|47|14|1
+Gnewjack|225|8|8|7|61|0|0
+Gnewjack|261|8|8|12345|86|0|1
+Gnewjack|67|4|92|987654321|30|14|0
+Gnewjack|1|2|92|semilla larga 2026|32|14|0
+Gnewjack|149|8|92|0|67|14|1
+Gnewjack|1|8|50|semilla larga 2026|14|14|0
+Gnewjack|129|1|0|12345|98|36|0
+Gnewjack|263|8|18|4294967295|82|36|1
+Gnewjack|9|4|92|4294967295|97|14|0
+Gnewjack|296|2|92|12345|53|100|1
+Gnewjack|44|8|0|7|5|0|0
+Gnewjack|0|1|50|semilla larga 2026|60|0|0
+Gnewjack|22|4|0|semilla larga 2026|13|36|1
+Gnewjack|262|1|0|7|16|100|0
+Gnewjack|69|4|50|987654321|7|14|0
+Gnewjack|0|2|92|4294967295|64|0|1
+Gnewjack|32|8|92|12345|25|36|0
+Gnewjack|340|1|0|4294967295|80|14|1
+Gnewjack|121|2|50|7|29|36|0
+Gnewjack|161|2|50|4294967295|16|36|1
+Gnewjack|256|1|0|semilla larga 2026|19|14|1
+Gnewjack|11|8|92|7|44|14|1
+Gnewjack|52|2|18|7|39|100|1
+Gnewjack|34|2|50|hola|94|0|1
+Gnewjack|0|1|8|12345|0|100|0
+Ghouse|0|8|18|987654321|11|36|1
+Ghouse|0|1|18|7|33|14|0
+Ghouse|0|1|92|0|93|100|1
+Ghouse|0|2|0|12345|77|14|0
+Ghouse|0|8|18|7|53|0|1
+Ghouse|0|1|50|hola|60|0|0
+Ghouse|0|8|8|4294967295|56|0|1
+Ghouse|0|1|92|12345|30|100|0
+Ghouse|123|2|92|7|58|100|1
+Ghouse|329|4|18|12345|31|100|1
+Ghouse|336|4|0|0|4|36|1
+Ghouse|101|8|50|hola|3|14|0
+Ghouse|260|4|18|7|48|100|0
+Ghouse|24|4|8|4294967295|77|100|1
+Ghouse|16|2|50|hola|60|100|1
+Ghouse|48|4|92|12345|26|0|0
+Ghouse|176|8|8|0|52|36|0
+Ghouse|32|4|0|987654321|55|100|0
+Ghouse|86|1|8|4294967295|43|14|0
+Ghouse|181|4|8|4294967295|30|14|0
+Ghouse|4|4|18|hola|16|100|0
+Ghouse|5|2|8|987654321|96|0|1
+Ghouse|0|2|100|4294967295|29|14|0
+Ghouse|40|4|8|12345|9|0|1
+Ghouse|0|4|8|987654321|55|0|1
+Ghouse|32|8|18|semilla larga 2026|40|0|1
+Ghouse|4|4|8|4294967295|54|36|1
+Ghouse|20|4|50|semilla larga 2026|23|14|0
+Ghouse|64|1|92|semilla larga 2026|76|14|0
+Ghouse|0|8|18|0|8|100|0
+Ghouse|10|8|50|987654321|8|0|1
+Ghouse|132|8|18|0|73|36|1
+Ghouse|74|4|0|semilla larga 2026|90|36|0
+Ghouse|332|2|50|4294967295|54|0|0
+Ghouse|80|2|8|12345|6|36|1
+Ghouse|264|1|8|semilla larga 2026|64|100|1
+Ghouse|128|1|100|0|9|100|0
+Ghouse|420|4|100|4294967295|98|36|1
+Ghouse|127|1|92|7|24|0|1
+Ghouse|137|1|18|semilla larga 2026|29|0|0
+Greggaeton|0|1|0|987654321|0|100|1
+Greggaeton|0|8|0|7|14|100|0
+Greggaeton|0|1|18|987654321|19|14|0
+Greggaeton|0|2|0|hola|31|36|0
+Greggaeton|0|8|0|12345|76|36|1
+Greggaeton|0|1|50|4294967295|26|36|1
+Greggaeton|0|4|8|7|95|14|1
+Greggaeton|0|2|100|0|89|14|1
+Greggaeton|4|8|50|7|84|100|1
+Greggaeton|33|8|8|12345|91|100|0
+Greggaeton|2|4|100|semilla larga 2026|91|36|0
+Greggaeton|69|4|0|semilla larga 2026|31|36|0
+Greggaeton|17|2|8|12345|41|0|0
+Greggaeton|48|2|92|semilla larga 2026|43|0|0
+Greggaeton|256|2|18|hola|91|36|1
+Greggaeton|40|1|92|12345|45|36|1
+Greggaeton|38|1|50|12345|16|100|0
+Greggaeton|312|4|8|hola|78|14|0
+Greggaeton|88|1|8|0|14|0|1
+Greggaeton|68|4|0|12345|58|0|0
+Greggaeton|2|8|18|4294967295|83|0|1
+Greggaeton|0|8|18|987654321|60|100|0
+Greggaeton|8|2|18|4294967295|98|14|0
+Greggaeton|269|8|0|semilla larga 2026|7|36|0
+Greggaeton|0|2|8|12345|48|100|1
+Greggaeton|11|8|100|hola|75|36|0
+Greggaeton|64|2|50|4294967295|28|36|0
+Greggaeton|104|8|0|semilla larga 2026|88|0|1
+Greggaeton|66|4|50|987654321|74|14|1
+Greggaeton|160|4|50|12345|57|100|1
+Greggaeton|320|1|8|0|16|36|1
+Greggaeton|256|8|100|semilla larga 2026|55|14|0
+Greggaeton|258|4|0|12345|75|0|0
+Greggaeton|36|8|50|7|20|0|1
+Greggaeton|26|4|8|4294967295|66|36|1
+Greggaeton|16|1|18|987654321|3|14|1
+Greggaeton|80|8|18|0|61|0|1
+Greggaeton|75|1|8|987654321|2|0|1
+Greggaeton|160|4|8|hola|62|0|0
+Greggaeton|193|1|92|987654321|22|14|1
+Grock|0|8|8|semilla larga 2026|47|0|1
+Grock|0|1|8|hola|5|14|1
+Grock|0|2|100|semilla larga 2026|94|36|0
+Grock|0|4|92|987654321|16|36|1
+Grock|0|2|8|987654321|41|100|0
+Grock|0|8|0|semilla larga 2026|61|0|1
+Grock|0|1|92|12345|10|14|0
+Grock|0|8|50|semilla larga 2026|18|0|0
+Grock|9|1|50|hola|0|100|1
+Grock|1|1|8|semilla larga 2026|17|0|1
+Grock|82|1|0|987654321|69|36|1
+Grock|12|8|100|hola|57|100|1
+Grock|74|2|0|0|20|14|1
+Grock|358|2|100|12345|69|0|1
+Grock|8|1|8|0|51|100|1
+Grock|284|2|18|7|1|0|0
+Grock|48|4|0|0|64|100|0
+Grock|192|2|0|hola|34|36|0
+Grock|6|8|100|0|26|36|0
+Grock|102|8|92|987654321|3|0|0
+Grock|4|1|8|987654321|41|36|1
+Grock|4|8|50|4294967295|31|100|0
+Grock|32|2|92|12345|81|100|0
+Grock|17|2|100|12345|91|100|1
+Grock|146|4|8|7|96|0|0
+Grock|0|2|8|hola|26|14|0
+Grock|329|1|92|0|1|100|1
+Grock|144|8|0|hola|43|100|0
+Grock|66|2|92|0|69|14|0
+Grock|10|1|50|12345|3|0|0
+Grock|32|1|100|semilla larga 2026|27|0|0
+Grock|64|2|0|7|44|36|0
+Grock|4|4|100|0|56|0|1
+Grock|257|1|8|987654321|22|0|0
+Grock|5|8|100|hola|13|0|0
+Grock|256|2|8|hola|22|100|1
+Grock|119|2|50|987654321|89|14|1
+Grock|257|4|18|0|98|0|0
+Grock|40|1|0|4294967295|76|100|0
+Grock|301|4|50|0|44|14|1
+Gjazz|0|2|92|7|70|100|0
+Gjazz|0|1|92|7|81|14|0
+Gjazz|0|1|92|12345|39|14|0
+Gjazz|0|8|50|hola|79|0|1
+Gjazz|0|4|100|4294967295|98|0|1
+Gjazz|0|1|50|0|58|100|0
+Gjazz|0|1|18|987654321|17|100|0
+Gjazz|0|2|100|987654321|35|100|1
+Gjazz|322|4|18|4294967295|46|0|0
+Gjazz|385|2|18|semilla larga 2026|65|36|1
+Gjazz|12|8|18|semilla larga 2026|38|0|0
+Gjazz|9|4|18|semilla larga 2026|45|100|1
+Gjazz|4|1|8|hola|76|0|1
+Gjazz|8|4|18|4294967295|66|100|1
+Gjazz|65|1|0|7|72|36|1
+Gjazz|0|4|100|7|99|100|0
+Gjazz|144|4|8|4294967295|11|100|0
+Gjazz|0|8|50|4294967295|56|100|0
+Gjazz|289|1|92|4294967295|99|36|1
+Gjazz|224|1|50|hola|75|100|1
+Gjazz|48|4|50|987654321|42|100|0
+Gjazz|82|1|92|0|53|100|0
+Gjazz|275|2|100|4294967295|22|36|0
+Gjazz|0|1|92|4294967295|53|0|1
+Gjazz|17|8|50|4294967295|42|0|0
+Gjazz|131|8|100|987654321|98|14|1
+Gjazz|65|4|92|987654321|44|14|1
+Gjazz|80|2|18|987654321|75|14|0
+Gjazz|48|1|8|12345|36|14|1
+Gjazz|129|4|100|hola|87|0|1
+Gjazz|0|8|18|0|21|36|0
+Gjazz|16|1|92|0|11|14|1
+Gjazz|1|4|50|12345|62|14|1
+Gjazz|260|8|100|semilla larga 2026|79|14|0
+Gjazz|33|2|8|0|85|100|0
+Gjazz|80|1|92|7|68|100|0
+Gjazz|136|2|50|4294967295|78|36|1
+Gjazz|14|2|8|12345|26|0|1
+Gjazz|0|2|8|hola|5|36|0
+Gjazz|65|8|100|4294967295|0|14|0
+Gbossa|0|2|0|semilla larga 2026|74|0|1
+Gbossa|0|1|8|7|58|0|1
+Gbossa|0|8|0|semilla larga 2026|36|0|1
+Gbossa|0|8|100|0|27|14|0
+Gbossa|0|4|100|hola|91|0|1
+Gbossa|0|1|8|4294967295|57|36|1
+Gbossa|0|8|100|semilla larga 2026|10|0|0
+Gbossa|0|8|50|12345|67|0|1
+Gbossa|2|8|0|hola|73|100|1
+Gbossa|132|4|0|0|100|0|0
+Gbossa|112|8|8|semilla larga 2026|46|36|1
+Gbossa|14|4|92|7|70|0|0
+Gbossa|4|8|50|hola|77|100|1
+Gbossa|72|2|50|semilla larga 2026|45|14|1
+Gbossa|0|8|0|987654321|6|100|1
+Gbossa|136|8|50|semilla larga 2026|64|36|1
+Gbossa|0|8|8|hola|50|14|1
+Gbossa|8|2|18|hola|94|36|1
+Gbossa|64|1|8|4294967295|53|14|0
+Gbossa|68|4|0|12345|57|0|0
+Gbossa|3|4|8|hola|80|14|1
+Gbossa|109|2|100|0|56|14|1
+Gbossa|290|4|50|hola|64|0|0
+Gbossa|32|1|0|hola|45|14|1
+Gbossa|65|8|18|12345|6|14|1
+Gbossa|24|2|50|semilla larga 2026|14|14|0
+Gbossa|334|8|0|4294967295|65|14|0
+Gbossa|52|1|0|7|88|14|1
+Gbossa|72|8|92|hola|38|14|1
+Gbossa|384|2|18|hola|93|100|0
+Gbossa|76|1|100|7|48|36|0
+Gbossa|48|8|50|semilla larga 2026|4|100|1
+Gbossa|393|1|0|0|73|14|0
+Gbossa|19|1|100|0|31|0|1
+Gbossa|34|2|0|hola|8|0|1
+Gbossa|44|2|18|987654321|39|14|1
+Gbossa|192|8|8|7|79|14|1
+Gbossa|3|2|18|semilla larga 2026|41|100|0
+Gbossa|128|1|8|0|80|14|1
+Gbossa|176|8|18|12345|1|100|1
+Gsamba|0|1|50|12345|32|100|0
+Gsamba|0|2|18|0|9|0|1
+Gsamba|0|4|50|0|5|14|1
+Gsamba|0|1|100|12345|89|0|0
+Gsamba|0|1|0|0|53|36|1
+Gsamba|0|2|92|semilla larga 2026|61|14|0
+Gsamba|0|2|92|12345|82|14|1
+Gsamba|0|1|92|12345|61|100|1
+Gsamba|256|4|0|987654321|42|14|1
+Gsamba|322|2|18|hola|4|14|1
+Gsamba|3|8|50|semilla larga 2026|40|100|0
+Gsamba|195|2|50|987654321|95|100|0
+Gsamba|298|1|50|semilla larga 2026|91|100|1
+Gsamba|8|8|92|7|28|36|0
+Gsamba|56|2|100|0|71|14|1
+Gsamba|20|2|8|12345|36|14|0
+Gsamba|184|8|50|0|29|100|0
+Gsamba|64|1|18|4294967295|22|100|0
+Gsamba|9|8|8|12345|55|100|1
+Gsamba|256|2|18|987654321|31|14|1
+Gsamba|266|2|18|4294967295|45|36|1
+Gsamba|68|8|18|7|22|0|0
+Gsamba|65|8|18|4294967295|1|36|1
+Gsamba|25|4|8|semilla larga 2026|2|36|0
+Gsamba|160|2|100|7|1|0|0
+Gsamba|138|1|100|0|86|36|1
+Gsamba|7|8|92|4294967295|3|36|1
+Gsamba|57|8|18|7|89|0|0
+Gsamba|32|1|50|semilla larga 2026|75|14|1
+Gsamba|24|2|100|987654321|34|100|0
+Gsamba|178|1|92|7|16|14|1
+Gsamba|24|1|8|4294967295|11|0|0
+Gsamba|4|8|100|semilla larga 2026|13|14|0
+Gsamba|324|4|50|7|5|100|0
+Gsamba|256|4|100|12345|88|36|1
+Gsamba|1|1|92|987654321|71|36|1
+Gsamba|64|4|0|hola|56|0|0
+Gsamba|148|2|0|semilla larga 2026|11|14|0
+Gsamba|5|4|100|semilla larga 2026|7|14|0
+Gsamba|294|2|100|0|30|14|1
+Pneo-soul lento con ghost notes
+Pfunk 110 bpm sincopado
+Ptrap rápido minimal
+Pjazz swing 4 compases
+Pshuffle sin género
+Pboom bap fill 8 compases coro
+Psamba busy semicorcheas
+Pbossa nova 2 compases corcheas
+Prock verso 16 compases
+PR&B half-time
+Pafrobeats 100 bpm suelto
+Pnew jack swing recto
+Phip hop cuantizado
+P
+Palgo raro xyz
+Phouse 124
+Preggaetón despacio
+Pg-funk dos compases
+PÑandú rock estribillo
+Pcuatro compases funk 140
+Pfunk 300 bpm
+Psoul humano denso

@@ -1,0 +1,38 @@
+[package]
+name = "caja"
+version = "0.1.0"
+edition = "2021"
+description = "CAJA Drum Machine (Rust): generador de patrones de batería con motor de samples propio (plugin CLAP instrumento + standalone)"
+license = "GPL-3.0-or-later"
+
+[lib]
+# `cdylib` = plugin; `lib` = necesario para el binario standalone y tests.
+crate-type = ["cdylib", "lib"]
+
+[[bin]]
+name = "caja"
+path = "src/bin/caja.rs"
+required-features = ["standalone"]
+
+[features]
+default = []
+# Plan B 2: exporta además un VST3 (usa menos CCs por plugin: ver README).
+vst3 = ["nih_plug/vst3"]
+# Aplicación de escritorio: audio/MIDI del sistema (JACK/cpal) + GUI egui.
+#   cargo run -p caja --features standalone --release
+standalone = ["nih_plug/standalone"]
+
+[dependencies]
+# nih-plug no está en crates.io: se usa desde Git. Fija un commit con `rev = "..."` cuando
+# tengas una combinación que funcione en tu máquina (ver README).
+nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", default-features = false, features = ["assert_process_allocs"] }
+nih_plug_egui = { git = "https://github.com/robbert-vdh/nih-plug.git" }
+caja-core = { path = "../core" }
+# Decodificación (WAV obligatorio; FLAC y OGG/Vorbis): Rust puro, MPL-2.0 (compatible con GPL-3.0-or-later).
+symphonia = { version = "0.5", default-features = false, features = ["wav", "pcm", "flac", "ogg", "vorbis"] }
+# Intercambio sin bloqueos de Arc<Sample> entre el hilo de carga y el de audio (MIT/Apache-2.0).
+arc-swap = "1"
+
+[dev-dependencies]
+# El mismo crate que usa nih-plug con `assert_process_allocs`: para comprobar que el audio no reserva.
+assert_no_alloc = { git = "https://github.com/robbert-vdh/rust-assert-no-alloc.git", branch = "feature/nested-permit-forbid" }

@@ -1,0 +1,18 @@
+# `core` es un workspace aparte (sin dependencias externas) para que se pueda compilar
+# y probar sin red: `cd core && cargo test`. El plugin lo usa por ruta.
+[workspace]
+resolver = "2"
+members = [
+    "plugin",
+    "xtask",
+]
+exclude = ["core"]
+
+[profile.release]
+lto = "thin"
+strip = "symbols"
+
+[profile.profiling]
+inherits = "release"
+debug = true
+strip = "none"

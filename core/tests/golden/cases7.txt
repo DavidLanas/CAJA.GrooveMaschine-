@@ -1,0 +1,292 @@
+Gtechno|0|4|50|4294967295|97|0|0
+Gtechno|0|8|0|hola|73|36|0
+Gtechno|0|1|18|0|52|36|0
+Gtechno|0|1|50|hola|76|36|0
+Gtechno|0|2|0|semilla larga 2026|45|100|1
+Gtechno|0|2|92|987654321|43|100|1
+Gtechno|0|4|0|semilla larga 2026|37|36|0
+Gtechno|0|8|18|hola|10|36|1
+Gtechno|64|4|18|7|64|100|1
+Gtechno|28|4|0|hola|40|100|0
+Gtechno|256|4|18|0|56|100|0
+Gtechno|1|1|8|12345|57|36|1
+Gtechno|164|8|0|7|88|100|0
+Gtechno|355|4|18|12345|65|14|0
+Gtechno|325|1|100|7|52|100|1
+Gtechno|227|1|100|0|67|100|0
+Gtechno|128|8|100|hola|47|14|1
+Gtechno|258|1|100|7|45|0|0
+Gtechno|384|2|100|4294967295|31|100|1
+Gtechno|37|4|92|hola|73|100|1
+Gtechno|37|8|8|7|20|36|1
+Gtechno|3|1|92|hola|0|0|0
+Gtechno|468|1|92|987654321|29|14|1
+Gtechno|68|4|50|hola|72|100|1
+Gtechno|266|1|8|0|17|0|1
+Gtechno|213|4|50|semilla larga 2026|97|0|1
+Gtechno|128|2|8|7|53|14|1
+Gtechno|232|1|8|7|26|100|0
+Gtechno|0|1|8|0|15|36|1
+Gtechno|69|1|18|987654321|57|100|1
+Gtechno|300|4|8|987654321|99|0|1
+Gtechno|40|8|50|12345|28|100|0
+Gtechno|390|1|18|12345|53|100|0
+Gtechno|133|4|8|12345|5|100|0
+Gtechno|129|8|18|0|45|36|0
+Gtechno|130|2|0|987654321|75|36|0
+Gtechno|145|1|92|7|2|100|0
+Gtechno|301|8|92|0|68|100|1
+Gtechno|420|4|18|hola|13|36|0
+Gtechno|38|1|50|12345|90|100|0
+Gtechhouse|0|1|92|12345|86|14|0
+Gtechhouse|0|2|18|hola|37|14|0
+Gtechhouse|0|1|8|hola|72|0|1
+Gtechhouse|0|2|0|7|60|14|1
+Gtechhouse|0|4|92|987654321|61|0|1
+Gtechhouse|0|4|92|0|12|0|0
+Gtechhouse|0|8|100|12345|70|100|1
+Gtechhouse|0|4|92|12345|22|36|0
+Gtechhouse|8|1|100|7|89|100|0
+Gtechhouse|68|8|50|12345|60|36|1
+Gtechhouse|394|2|100|12345|3|14|0
+Gtechhouse|4|1|50|hola|63|0|0
+Gtechhouse|115|4|50|12345|59|0|1
+Gtechhouse|296|4|0|7|60|36|0
+Gtechhouse|11|8|100|hola|62|0|0
+Gtechhouse|368|2|50|0|86|100|0
+Gtechhouse|0|8|50|987654321|28|0|1
+Gtechhouse|6|2|0|0|27|100|0
+Gtechhouse|1|1|50|hola|60|14|1
+Gtechhouse|408|2|18|hola|80|0|1
+Gtechhouse|132|4|100|7|96|36|0
+Gtechhouse|261|2|50|hola|11|0|0
+Gtechhouse|192|8|18|4294967295|18|14|0
+Gtechhouse|132|2|50|semilla larga 2026|77|100|1
+Gtechhouse|140|8|50|12345|0|0|0
+Gtechhouse|96|4|0|0|1|100|1
+Gtechhouse|4|1|18|hola|0|100|0
+Gtechhouse|320|2|18|7|66|14|1
+Gtechhouse|8|4|50|semilla larga 2026|18|14|0
+Gtechhouse|98|4|0|7|12|36|1
+Gtechhouse|68|4|8|semilla larga 2026|95|0|0
+Gtechhouse|136|8|18|0|42|36|1
+Gtechhouse|20|8|50|12345|73|100|1
+Gtechhouse|112|2|0|7|96|14|1
+Gtechhouse|37|8|92|987654321|21|100|0
+Gtechhouse|273|2|18|hola|100|36|0
+Gtechhouse|144|8|100|0|44|0|1
+Gtechhouse|100|1|50|semilla larga 2026|67|0|1
+Gtechhouse|36|8|0|7|77|100|1
+Gtechhouse|128|4|92|987654321|76|0|0
+Gdeephouse|0|1|50|7|56|36|1
+Gdeephouse|0|2|18|4294967295|52|36|1
+Gdeephouse|0|2|8|987654321|72|0|1
+Gdeephouse|0|1|0|0|25|100|1
+Gdeephouse|0|4|18|0|11|0|0
+Gdeephouse|0|2|18|7|96|0|0
+Gdeephouse|0|4|0|semilla larga 2026|5|14|0
+Gdeephouse|0|2|0|7|46|0|1
+Gdeephouse|96|4|0|987654321|39|36|0
+Gdeephouse|28|2|8|4294967295|70|0|1
+Gdeephouse|0|1|92|0|55|0|0
+Gdeephouse|183|1|92|semilla larga 2026|80|100|1
+Gdeephouse|8|4|0|0|68|0|1
+Gdeephouse|203|8|18|semilla larga 2026|19|36|1
+Gdeephouse|129|8|92|4294967295|62|14|0
+Gdeephouse|7|1|8|4294967295|49|0|1
+Gdeephouse|34|8|100|987654321|24|36|0
+Gdeephouse|52|1|0|0|67|14|0
+Gdeephouse|1|8|92|0|22|36|0
+Gdeephouse|200|1|18|4294967295|61|36|1
+Gdeephouse|130|2|92|987654321|50|36|1
+Gdeephouse|36|1|8|hola|91|0|1
+Gdeephouse|354|1|18|7|91|36|1
+Gdeephouse|36|1|92|semilla larga 2026|15|100|1
+Gdeephouse|132|8|0|987654321|65|0|1
+Gdeephouse|314|4|92|4294967295|49|36|1
+Gdeephouse|161|8|8|4294967295|70|100|0
+Gdeephouse|163|2|18|4294967295|26|100|0
+Gdeephouse|325|2|92|0|96|0|1
+Gdeephouse|10|4|8|987654321|7|0|0
+Gdeephouse|257|2|18|semilla larga 2026|51|14|1
+Gdeephouse|188|4|18|0|71|14|1
+Gdeephouse|9|8|100|0|94|14|1
+Gdeephouse|72|2|0|hola|72|36|0
+Gdeephouse|272|8|92|4294967295|94|100|1
+Gdeephouse|64|2|100|987654321|91|14|1
+Gdeephouse|50|8|92|hola|33|36|1
+Gdeephouse|304|2|100|hola|33|100|0
+Gdeephouse|178|1|8|987654321|57|14|0
+Gdeephouse|114|1|18|7|85|0|1
+Glofi|0|8|100|12345|50|36|0
+Glofi|0|2|0|0|74|0|0
+Glofi|0|1|0|4294967295|58|100|0
+Glofi|0|8|50|987654321|59|14|0
+Glofi|0|4|18|12345|59|14|1
+Glofi|0|1|8|0|87|14|1
+Glofi|0|2|92|hola|83|0|1
+Glofi|0|8|18|0|65|36|1
+Glofi|208|2|92|hola|78|100|0
+Glofi|163|2|50|4294967295|33|36|1
+Glofi|65|8|0|987654321|28|0|1
+Glofi|176|8|100|7|61|0|1
+Glofi|144|4|100|7|56|14|1
+Glofi|400|1|92|hola|4|36|1
+Glofi|450|2|8|0|14|0|0
+Glofi|192|1|92|987654321|8|100|0
+Glofi|128|1|92|12345|12|0|0
+Glofi|8|2|50|12345|14|14|0
+Glofi|40|1|92|semilla larga 2026|34|14|1
+Glofi|8|2|92|4294967295|53|14|1
+Glofi|0|1|92|semilla larga 2026|59|0|1
+Glofi|96|2|100|0|68|36|1
+Glofi|8|1|0|987654321|75|14|0
+Glofi|140|8|100|4294967295|70|14|0
+Glofi|146|1|50|12345|72|100|0
+Glofi|1|1|50|987654321|25|100|1
+Glofi|161|8|8|4294967295|34|100|1
+Glofi|0|2|92|987654321|0|36|1
+Glofi|294|8|100|7|42|36|0
+Glofi|0|2|50|987654321|85|0|1
+Glofi|142|2|18|7|56|0|0
+Glofi|0|2|50|4294967295|47|100|0
+Glofi|0|2|0|7|16|100|0
+Glofi|65|4|92|hola|72|0|0
+Glofi|256|1|92|semilla larga 2026|50|0|0
+Glofi|1|2|92|987654321|68|14|1
+Glofi|224|2|18|hola|99|14|0
+Glofi|65|1|0|987654321|65|14|1
+Glofi|0|2|50|7|14|100|1
+Glofi|66|8|8|7|69|36|0
+Gdnb|0|8|0|semilla larga 2026|0|14|1
+Gdnb|0|2|100|semilla larga 2026|56|36|1
+Gdnb|0|8|100|7|23|0|1
+Gdnb|0|1|18|hola|66|36|1
+Gdnb|0|8|92|7|88|36|0
+Gdnb|0|8|8|987654321|81|14|0
+Gdnb|0|2|92|12345|48|36|1
+Gdnb|0|4|0|semilla larga 2026|27|0|1
+Gdnb|8|2|50|0|67|100|1
+Gdnb|71|4|100|7|43|0|0
+Gdnb|284|8|100|0|11|0|1
+Gdnb|306|4|18|987654321|79|100|0
+Gdnb|9|2|100|0|47|0|0
+Gdnb|164|8|8|7|49|100|1
+Gdnb|385|2|100|12345|2|0|0
+Gdnb|292|1|100|12345|77|36|1
+Gdnb|32|1|50|0|90|100|1
+Gdnb|275|4|8|semilla larga 2026|45|0|1
+Gdnb|5|1|92|semilla larga 2026|45|100|0
+Gdnb|32|1|18|7|55|0|1
+Gdnb|0|2|18|7|54|0|0
+Gdnb|18|2|18|7|91|0|0
+Gdnb|80|8|50|semilla larga 2026|32|0|1
+Gdnb|65|8|100|0|8|14|0
+Gdnb|60|8|50|hola|89|100|0
+Gdnb|325|8|0|12345|76|36|1
+Gdnb|448|8|100|7|49|14|1
+Gdnb|2|1|8|7|93|14|1
+Gdnb|352|4|0|4294967295|19|0|0
+Gdnb|264|2|50|987654321|43|100|1
+Gdnb|1|1|92|hola|67|100|0
+Gdnb|8|2|92|semilla larga 2026|13|36|1
+Gdnb|132|1|18|12345|45|0|0
+Gdnb|84|2|8|0|16|36|0
+Gdnb|328|2|100|4294967295|67|36|1
+Gdnb|64|1|8|987654321|7|100|0
+Gdnb|268|8|100|4294967295|38|36|1
+Gdnb|64|1|8|hola|90|14|1
+Gdnb|17|1|0|4294967295|57|14|0
+Gdnb|128|1|100|0|17|100|1
+Gsynthwave|0|4|100|7|57|36|1
+Gsynthwave|0|2|100|987654321|9|100|0
+Gsynthwave|0|2|50|987654321|91|0|1
+Gsynthwave|0|1|100|4294967295|5|100|0
+Gsynthwave|0|4|0|hola|69|14|0
+Gsynthwave|0|4|92|semilla larga 2026|39|0|0
+Gsynthwave|0|2|8|987654321|10|36|0
+Gsynthwave|0|4|18|7|1|0|0
+Gsynthwave|128|1|8|semilla larga 2026|71|14|1
+Gsynthwave|128|1|18|987654321|61|36|1
+Gsynthwave|328|4|92|987654321|53|36|1
+Gsynthwave|64|8|8|12345|47|14|1
+Gsynthwave|225|8|8|7|61|0|0
+Gsynthwave|261|8|8|12345|86|0|1
+Gsynthwave|67|4|92|987654321|30|14|0
+Gsynthwave|1|2|92|semilla larga 2026|32|14|0
+Gsynthwave|149|8|92|0|67|14|1
+Gsynthwave|1|8|50|semilla larga 2026|14|14|0
+Gsynthwave|129|1|0|12345|98|36|0
+Gsynthwave|263|8|18|4294967295|82|36|1
+Gsynthwave|9|4|92|4294967295|97|14|0
+Gsynthwave|296|2|92|12345|53|100|1
+Gsynthwave|44|8|0|7|5|0|0
+Gsynthwave|0|1|50|semilla larga 2026|60|0|0
+Gsynthwave|22|4|0|semilla larga 2026|13|36|1
+Gsynthwave|262|1|0|7|16|100|0
+Gsynthwave|69|4|50|987654321|7|14|0
+Gsynthwave|0|2|92|4294967295|64|0|1
+Gsynthwave|32|8|92|12345|25|36|0
+Gsynthwave|340|1|0|4294967295|80|14|1
+Gsynthwave|121|2|50|7|29|36|0
+Gsynthwave|161|2|50|4294967295|16|36|1
+Gsynthwave|256|1|0|semilla larga 2026|19|14|1
+Gsynthwave|11|8|92|7|44|14|1
+Gsynthwave|52|2|18|7|39|100|1
+Gsynthwave|34|2|50|hola|94|0|1
+Gsynthwave|0|1|8|12345|0|100|0
+Gsynthwave|8|8|18|987654321|11|36|1
+Gsynthwave|66|1|18|7|33|14|0
+Gsynthwave|0|1|92|0|93|100|1
+Gdembow|0|2|0|12345|77|14|0
+Gdembow|0|8|18|7|53|0|1
+Gdembow|0|1|50|hola|60|0|0
+Gdembow|0|8|8|4294967295|56|0|1
+Gdembow|0|1|92|12345|30|100|0
+Gdembow|0|2|92|7|58|100|1
+Gdembow|0|4|18|12345|31|100|1
+Gdembow|0|4|0|0|4|36|1
+Gdembow|101|8|50|hola|3|14|0
+Gdembow|260|4|18|7|48|100|0
+Gdembow|24|4|8|4294967295|77|100|1
+Gdembow|16|2|50|hola|60|100|1
+Gdembow|48|4|92|12345|26|0|0
+Gdembow|176|8|8|0|52|36|0
+Gdembow|32|4|0|987654321|55|100|0
+Gdembow|86|1|8|4294967295|43|14|0
+Gdembow|181|4|8|4294967295|30|14|0
+Gdembow|4|4|18|hola|16|100|0
+Gdembow|5|2|8|987654321|96|0|1
+Gdembow|0|2|100|4294967295|29|14|0
+Gdembow|40|4|8|12345|9|0|1
+Gdembow|0|4|8|987654321|55|0|1
+Gdembow|32|8|18|semilla larga 2026|40|0|1
+Gdembow|4|4|8|4294967295|54|36|1
+Gdembow|20|4|50|semilla larga 2026|23|14|0
+Gdembow|64|1|92|semilla larga 2026|76|14|0
+Gdembow|0|8|18|0|8|100|0
+Gdembow|10|8|50|987654321|8|0|1
+Gdembow|132|8|18|0|73|36|1
+Gdembow|74|4|0|semilla larga 2026|90|36|0
+Gdembow|332|2|50|4294967295|54|0|0
+Gdembow|80|2|8|12345|6|36|1
+Gdembow|264|1|8|semilla larga 2026|64|100|1
+Gdembow|128|1|100|0|9|100|0
+Gdembow|420|4|100|4294967295|98|36|1
+Gdembow|127|1|92|7|24|0|1
+Gdembow|137|1|18|semilla larga 2026|29|0|0
+Gdembow|50|1|0|987654321|0|100|1
+Gdembow|18|8|0|7|14|100|0
+Gdembow|162|1|18|987654321|19|14|0
+Ptechno 132 bpm con fill 4 compases
+Ptech house
+Pdeep house lento
+Plo-fi beats suelto
+Pdrum & bass rapido
+Pdrum and bass 174
+Psynthwave 108 bpm
+Pretrowave coro
+Poutrun verso
+Pdembow 96 cargado
+Plofi minimal 2 compases
+Pd b busy

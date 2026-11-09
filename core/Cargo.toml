@@ -1,0 +1,17 @@
+[package]
+name = "caja-core"
+version = "0.1.0"
+edition = "2021"
+description = "Motor de CAJA: patrones de batería, géneros, parser, .mid, scheduler y sesión (sin dependencias externas)"
+license = "GPL-3.0-or-later"
+
+[workspace]
+
+[lib]
+name = "caja_core"
+
+# Sin dependencias a propósito: compila y se prueba sin red.
+[dependencies]
+
+[profile.release]
+debug = false

@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "comment": "Mapas de notas por kit. Cada mapa asigna una nota MIDI (0-127) a cada una de las 25 piezas. Edita o añade mapas; el orden es el de la lista.",
+  "maps": [
+    {
+      "name": "Bitwig Drum Machine",
+      "notes": { "kick": 36, "snare": 37, "ch": 38, "oh": 39, "kick2": 40, "sn2": 41, "ch2": 42, "oh2": 43, "shaker": 44, "clap": 45,
+                 "rim": 46, "ride": 47, "egg": 48, "tom1": 49, "tom2": 50, "tom3": 51, "crash": 52, "cowbell": 53, "congaH": 54,
+                 "congaL": 55, "clave": 56, "timbalH": 57, "timbalL": 58, "guiro": 59, "pandereta": 60 }
+    },
+    {
+      "name": "GM",
+      "notes": { "kick": 36, "snare": 38, "ch": 42, "oh": 46, "kick2": 35, "sn2": 40, "ch2": 44, "oh2": 55, "egg": 69, "clap": 39,
+                 "rim": 37, "ride": 51, "shaker": 70, "tom1": 45, "tom2": 47, "tom3": 50, "crash": 49, "cowbell": 56, "congaH": 63,
+                 "congaL": 64, "clave": 75, "timbalH": 65, "timbalL": 66, "guiro": 73, "pandereta": 54 }
+    }
+  ]
+}
