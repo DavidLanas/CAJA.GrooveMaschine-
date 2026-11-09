@@ -1,0 +1,9 @@
+# Carpetas de compilación
+build/
+bin/
+target/
+Target/
+cmake-build-*/
+.vs/
+*.VST3/
+*.clap/
