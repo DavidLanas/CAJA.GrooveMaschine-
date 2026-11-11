@@ -161,6 +161,36 @@ pub fn load(path: &Path, host_sr: u32, max_len_ms: u32) -> Result<Sample, String
     Ok(Sample { left, right })
 }
 
+/// Escribe un WAV PCM 16-bit estéreo (o mono) a un buffer en memoria.
+pub fn write_wav_pcm16(sr: u32, left: &[f32], right: Option<&[f32]>) -> Vec<u8> {
+    let frames = left.len();
+    let ch: u16 = if right.is_some() { 2 } else { 1 };
+    let mut data = Vec::with_capacity(frames * ch as usize * 2);
+    for i in 0..frames {
+        let l = (left[i].clamp(-1.0, 1.0) * 32767.0) as i16;
+        data.extend_from_slice(&l.to_le_bytes());
+        if let Some(r) = right {
+            let rv = (r.get(i).copied().unwrap_or(0.0).clamp(-1.0, 1.0) * 32767.0) as i16;
+            data.extend_from_slice(&rv.to_le_bytes());
+        }
+    }
+    let mut out = Vec::with_capacity(44 + data.len());
+    out.extend_from_slice(b"RIFF");
+    out.extend_from_slice(&(36 + data.len() as u32).to_le_bytes());
+    out.extend_from_slice(b"WAVEfmt ");
+    out.extend_from_slice(&16u32.to_le_bytes()); // chunk size
+    out.extend_from_slice(&1u16.to_le_bytes()); // PCM
+    out.extend_from_slice(&ch.to_le_bytes());
+    out.extend_from_slice(&sr.to_le_bytes());
+    out.extend_from_slice(&(sr * u32::from(ch) * 2).to_le_bytes()); // byte rate
+    out.extend_from_slice(&(ch * 2).to_le_bytes()); // block align
+    out.extend_from_slice(&16u16.to_le_bytes()); // bits
+    out.extend_from_slice(b"data");
+    out.extend_from_slice(&(data.len() as u32).to_le_bytes());
+    out.extend_from_slice(&data);
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

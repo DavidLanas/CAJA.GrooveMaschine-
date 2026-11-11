@@ -63,3 +63,37 @@ para el mismo puerto si lo usas a la vez (evita dobles LEDs).
 4. Pulsa **PATTERN** → el LED del botón debe cambiar; pads eligen patrón.
 5. Gira el encoder → BPM en el LCD.
 6. Pulsa **STEP** → pads editan pasos.
+
+## LED Bridge con script de Bitwig (v4.8+)
+
+Cuando usas el controller script de Bitwig (Maschine Mikro MK3 Linux) y quieres
+que los pads muestren el estado interno de CAJA (patrones / rack):
+
+1. En Bitwig → Preferencias del script → **CAJA LED Bridge = Enabled**
+2. En el plugin CAJA:
+   - **MK3 nativo = No**  (el script controla botones y modos de Bitwig)
+   - **LEDs a script = Sí**  (el plugin escribe `/tmp/caja-leds.json`)
+3. Deja la ventana del plugin abierta (o al menos que se haya pintado una vez)
+   para que el estado se actualice.
+
+El plugin escribe `{"seq":N,"pads":[c0..c15]}` de forma atómica. El script lee
+el archivo cada 50 ms y actualiza solo los 16 pads; los botones siguen bajo
+control del script.
+
+Con nativo off, el modo de LEDs se infiere de la pestaña de la GUI:
+- pestaña patrón → Pattern (pads = slots llenos / activo)
+- pestaña rack   → Rack (pasos + playhead)
+
+## Botón SWING + encoder
+
+Ciclo al pulsar **SWING**:
+
+| Paso | Encoder controla |
+|------|------------------|
+| 0 (off) | BPM (o Master con Shift / VOLUME) |
+| 1 | Swing % |
+| 2 | Acento % |
+| 3 | Humanize % |
+| 4 | Densidad % |
+
+El LED de SWING se enciende en los pasos 1–4.

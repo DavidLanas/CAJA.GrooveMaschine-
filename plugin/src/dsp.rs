@@ -106,6 +106,8 @@ pub struct Engine {
     fade_mul: f32,
     pub pin_missing_hits: u32,
     mute: [bool; NUM_PADS],
+    solo: [bool; NUM_PADS],
+    any_solo: bool,
     pan: [f32; NUM_PADS],
     /// Ganancia lineal por pad (1.0 = 0 dB), desde parámetro del host.
     gain: [f32; NUM_PADS],
@@ -129,6 +131,8 @@ impl Engine {
             fade_mul: 1.0,
             pin_missing_hits: 0,
             mute: [false; NUM_PADS],
+            solo: [false; NUM_PADS],
+            any_solo: false,
             pan: [0.0; NUM_PADS],
             gain: [1.0; NUM_PADS],
             rate: [0; NUM_PADS],
@@ -179,15 +183,18 @@ impl Engine {
     }
 
     #[allow(dead_code)]
-    /// Mute, paneo, ganancia y ritmo ROLL por pad (parámetros del host, asignables a macros). Una vez por bloque.
+    /// Mute, solo, paneo, ganancia y ritmo ROLL por pad (parámetros del host, asignables a macros).
     pub fn set_mixer(
         &mut self,
         mute: &[bool; NUM_PADS],
+        solo: &[bool; NUM_PADS],
         pan: &[f32; NUM_PADS],
         gain: &[f32; NUM_PADS],
         rate: &[u8; NUM_PADS],
     ) {
         self.mute = *mute;
+        self.solo = *solo;
+        self.any_solo = solo.iter().any(|&s| s);
         self.pan = *pan;
         self.gain = *gain;
         self.rate = *rate;
@@ -217,7 +224,10 @@ impl Engine {
             return;
         }
         let cfg = &kit.pads[pad];
-        if self.mute[pad] || (kit.any_solo && !cfg.solo) {
+        // Solo/mute: preferir parámetros del host (macros Bitwig); kit.solo como respaldo.
+        let pad_solo = self.solo[pad] || cfg.solo;
+        let any_solo = self.any_solo || kit.any_solo;
+        if self.mute[pad] || (any_solo && !pad_solo) {
             return;
         }
         self.clock += 1;
@@ -524,11 +534,11 @@ mod tests {
         let mut e = Engine::new(SR);
         let mut mute = [false; NUM_PADS];
         mute[0] = true;
-        e.set_mixer(&mute, &[0.0; NUM_PADS], &[1.0; NUM_PADS], &[0; NUM_PADS]);
+        e.set_mixer(&mute, &[false; NUM_PADS], &[0.0; NUM_PADS], &[1.0; NUM_PADS], &[0; NUM_PADS]);
         e.begin_block(&ka, &host_all(ALL_LOCK));
         e.trigger(0, 1.0, &ka, &store, -1.0);
         assert_eq!(e.active_voices(), 0);
-        e.set_mixer(&[false; NUM_PADS], &[0.0; NUM_PADS], &[1.0; NUM_PADS], &[0; NUM_PADS]);
+        e.set_mixer(&[false; NUM_PADS], &[false; NUM_PADS], &[0.0; NUM_PADS], &[1.0; NUM_PADS], &[0; NUM_PADS]);
         ka.pads[5].solo = true;
         ka.any_solo = true;
         e.trigger(0, 1.0, &ka, &store, -1.0);
@@ -543,7 +553,7 @@ mod tests {
         let mut e = Engine::new(SR);
         let mut pan = [0.0; NUM_PADS];
         pan[1] = -1.0;
-        e.set_mixer(&[false; NUM_PADS], &pan, &[1.0; NUM_PADS], &[0; NUM_PADS]);
+        e.set_mixer(&[false; NUM_PADS], &[false; NUM_PADS], &pan, &[1.0; NUM_PADS], &[0; NUM_PADS]);
         e.begin_block(&ka, &host_all(ALL_LOCK));
         e.trigger(1, 1.0, &ka, &store, -1.0);
         let (mut l, mut r) = (vec![0.0; 512], vec![0.0; 512]);

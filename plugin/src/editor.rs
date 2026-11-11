@@ -25,8 +25,31 @@ use nih_plug_egui::{create_egui_editor, resizable_window::ResizableWindow};
 use std::sync::atomic::Ordering;
 use std::sync::Arc;
 use std::time::Duration;
+use std::fs;
+use std::io::Write;
+use std::path::Path;
 
 mod kitview;
+
+/// Escribe el estado de pads para el script de Bitwig (`/tmp/caja-leds.json`).
+/// Formato: `{"seq":N,"pads":[c0,...,c15]}`. Escritura atómica (tmp + rename).
+fn write_caja_leds_json(seq: u64, pads: &[u8; 16]) {
+    let path = Path::new("/tmp/caja-leds.json");
+    let tmp = Path::new("/tmp/caja-leds.json.tmp");
+    let mut body = format!("{{\"seq\":{},\"pads\":[", seq);
+    for (i, c) in pads.iter().enumerate() {
+        if i > 0 {
+            body.push(',');
+        }
+        body.push_str(&c.to_string());
+    }
+    body.push_str("]}");
+    if let Ok(mut f) = fs::File::create(tmp) {
+        let _ = f.write_all(body.as_bytes());
+        let _ = f.sync_all();
+        let _ = fs::rename(tmp, path);
+    }
+}
 
 const PAD_X: f32 = 8.0;
 const PAD_Y: f32 = 5.0;
@@ -128,6 +151,14 @@ struct Gui {
     show_help: bool,
     /// Compás visible en la pantalla RACK (0 .. bars-1).
     rack_bar: usize,
+    /// Navegador de carpetas (modo Library / pestaña Librería).
+    lib_browse_path: String,
+    /// Entradas: (nombre, es_directorio). Puede incluir ".." al inicio.
+    lib_entries: Vec<(String, bool)>,
+    lib_cursor: usize,
+    /// Edge detection para macros bool de Bitwig (Generar / Regenerar).
+    prev_generate: bool,
+    prev_regenerate: bool,
 }
 
 impl Gui {
@@ -161,17 +192,39 @@ impl Gui {
             pattern_bank: 0,
             show_help: false,
             rack_bar: 0,
+            lib_browse_path: String::new(),
+            lib_entries: Vec::new(),
+            lib_cursor: 0,
+            prev_generate: false,
+            prev_regenerate: false,
         }
     }
 
     /// Publica el estado de LEDs del MK3 (la salida MIDI real ocurre en process).
+    /// También escribe `/tmp/caja-leds.json` si "MK3 LEDs a script" está activo
+    /// (puente para el controller script de Bitwig).
     fn push_mk3_leds(&mut self, view: &View, p: &CajaParams) {
-        if !p.mk3_enabled.value() { return; }
-        let mode = self.mk3.lock().map(|m| m.mode()).unwrap_or_default();
+        // Siempre calculamos los colores (aunque nativo esté off) para el bridge.
+        // Con nativo off, el modo del bridge no cambia por el controlador: lo
+        // inferimos de la pestaña de la GUI para que Pattern/Rack se vean bien.
+        let mode = if p.mk3_enabled.value() {
+            self.mk3.lock().map(|m| m.mode()).unwrap_or_default()
+        } else {
+            match self.tab {
+                3 => Mk3Mode::Rack,
+                2 => Mk3Mode::Mixer,
+                1 => Mk3Mode::Library,
+                _ => Mk3Mode::Pattern, // tab 0 (patrón / perform)
+            }
+        };
         let bank = self.pattern_bank.min(1) as u8;
         let mut filled: u16 = 0;
         let base = bank as usize * 16;
-        for i in 0..16 { if view.pattern_filled[base + i] { filled |= 1 << i; } }
+        for i in 0..16 {
+            if view.pattern_filled[base + i] {
+                filled |= 1 << i;
+            }
+        }
         let first = self.rack_bar * STEPS_PER_BAR;
         let mut rack_steps = [0u8; 16];
         let pi = self.selected.min(NUM_PIECES - 1);
@@ -179,25 +232,43 @@ impl Gui {
             let st = first + i;
             if st < view.pattern.steps() {
                 let c = view.pattern.cell[pi][st];
-                if c.on() { rack_steps[i] = c.vel; }
+                if c.on() {
+                    rack_steps[i] = c.vel;
+                }
             }
         }
         let step_now = self.model.host.step.load(Ordering::Relaxed);
         let playing = self.model.host.playing.load(Ordering::Relaxed) && step_now >= 0;
-        let playhead = if playing && step_now as usize / STEPS_PER_BAR == self.rack_bar { (step_now as usize % STEPS_PER_BAR) as u8 } else { 255 };
-        
+        let playhead = if playing && step_now as usize / STEPS_PER_BAR == self.rack_bar {
+            (step_now as usize % STEPS_PER_BAR) as u8
+        } else {
+            255
+        };
+
         let mut pad_mutes = [false; NUM_PADS];
         let mut pad_locks = [0u8; NUM_PADS];
         for i in 0..NUM_PADS {
             pad_mutes[i] = p.pads[i].mute.value();
             pad_locks[i] = p.pads[i].mode.value() as u8;
         }
-        
+
         let st = Mk3LedState {
-            mode, pattern_bank: bank, pattern_active: view.pattern_active as u8,
-            pattern_filled: filled, rack_steps, playhead, playing, pad_mutes, pad_locks,
+            mode,
+            pattern_bank: bank,
+            pattern_active: view.pattern_active as u8,
+            pattern_filled: filled,
+            rack_steps,
+            playhead,
+            playing,
+            pad_mutes,
+            pad_locks,
         };
-        if let Ok(mut m) = self.mk3.lock() { m.update_leds(&st); }
+        if let Ok(mut m) = self.mk3.lock() {
+            m.update_leds(&st);
+            if p.mk3_leds_to_script.value() {
+                write_caja_leds_json(m.led_seq, &m.pad_colors());
+            }
+        }
     }
 
     /// Aplica comandos del Mikro MK3 (Pattern / Rack / Mixer / Samples / Library) en el hilo de la GUI.
@@ -210,6 +281,7 @@ impl Gui {
                 Mk3Cmd::SelectPattern(idx) => {
                     let n = self.model.with(snap, |s| s.select_pattern(idx as usize));
                     apply_snap(setter, p, n);
+                    set(setter, &p.pattern, i32::from(idx).clamp(0, 31));
                     self.pattern_bank = (idx as usize) / 16;
                     self.tab = 0;
                     self.status = format!("MK3 Patron {}{}", if idx < 16 { "A" } else { "B" }, (idx % 16) + 1);
@@ -249,9 +321,35 @@ impl Gui {
                     let next = (p.master.value() + f32::from(d) * 0.5).clamp(-24.0, 6.0);
                     set(setter, &p.master, next); self.status = format!("Master {next:.1} dB");
                 }
-                Mk3Cmd::SwingDelta(d) => { let next = (p.swing.value() + i32::from(d) * 2).clamp(0, 100); set(setter, &p.swing, next); }
-                Mk3Cmd::AccentDelta(d) => { let next = (p.accent.value() + i32::from(d) * 2).clamp(0, 100); set(setter, &p.accent, next); }
-                Mk3Cmd::HumanDelta(d) => { let next = (p.human.value() + i32::from(d) * 2).clamp(0, 100); set(setter, &p.human, next); }
+                Mk3Cmd::SwingDelta(d) => {
+                    let next = (p.swing.value() + i32::from(d) * 2).clamp(0, 100);
+                    set(setter, &p.swing, next);
+                    self.status = format!("Swing: {next}%");
+                }
+                Mk3Cmd::AccentDelta(d) => {
+                    let next = (p.accent.value() + i32::from(d) * 2).clamp(0, 100);
+                    set(setter, &p.accent, next);
+                    self.status = format!("Acento: {next}%");
+                }
+                Mk3Cmd::HumanDelta(d) => {
+                    let next = (p.human.value() + i32::from(d) * 2).clamp(0, 100);
+                    set(setter, &p.human, next);
+                    self.status = format!("Humanize: {next}%");
+                }
+                Mk3Cmd::DensityDelta(d) => {
+                    let next = (p.density.value() + i32::from(d) * 2).clamp(0, 100);
+                    set(setter, &p.density, next);
+                    self.status = format!("Densidad: {next}%");
+                }
+                Mk3Cmd::SwingModeSet(mode) => {
+                    self.status = match mode {
+                        1 => format!("Encoder → Swing ({})%", p.swing.value()),
+                        2 => format!("Encoder → Acento ({})%", p.accent.value()),
+                        3 => format!("Encoder → Humanize ({})%", p.human.value()),
+                        4 => format!("Encoder → Densidad ({})%", p.density.value()),
+                        _ => "Encoder → BPM / Master".into(),
+                    };
+                }
                 Mk3Cmd::SelectCell(pad) => { self.sel_pad = pad.min(NUM_PADS - 1); self.tab = 2; }
                 Mk3Cmd::CellVolAbsolute(v) => {
                     let gain = (v as f32 / 127.0) * 2.0;
@@ -305,6 +403,12 @@ impl Gui {
                     }
                 }
                 Mk3Cmd::OpenExplorer => { self.pick_folder(); }
+                Mk3Cmd::LibBrowse(delta) => {
+                    self.lib_browse_delta(delta);
+                }
+                Mk3Cmd::LibEnter => {
+                    self.lib_browse_enter();
+                }
                 Mk3Cmd::LibrarySetting(row, col) => {
                     match row {
                         0 => { let caps = [8, 16, 32, 64]; self.kit.edit(|k| k.bank_cap = caps[col as usize]); }
@@ -336,7 +440,11 @@ impl Gui {
                     match mode {
                         Mk3Mode::Mixer => { self.tab = 2; self.status = "MK3: modo Mixer".into(); }
                         Mk3Mode::Samples => { self.tab = 2; self.status = "MK3: modo Samples".into(); }
-                        Mk3Mode::Library => { self.tab = 1; self.status = "MK3: modo Libreria".into(); }
+                        Mk3Mode::Library => {
+                            self.tab = 1;
+                            self.lib_ensure_listing();
+                            self.status = "MK3: modo Libreria — encoder navega, press carga".into();
+                        }
                         Mk3Mode::Pattern => { self.tab = 0; self.status = "MK3: modo Pattern".into(); }
                         Mk3Mode::Rack => { self.tab = 3; self.status = "MK3: modo Rack".into(); }
                         Mk3Mode::Perform => { self.tab = 0; self.status = "MK3: modo Perform".into(); }
@@ -644,7 +752,70 @@ impl Gui {
         let snap = p.snap();
         // Comandos del Mikro MK3 encolados en el hilo de audio
         self.drain_mk3(setter, p);
-        let view = self.view(snap);
+        // Macro / automatización de Bitwig → patrón activo
+        {
+            let want = p.pattern.value().clamp(0, 31) as usize;
+            let view0 = self.view(snap);
+            if want != view0.pattern_active {
+                let n = self.model.with(snap, |s| s.select_pattern(want));
+                apply_snap(setter, p, n);
+                self.pattern_bank = want / 16;
+            }
+        }
+        // Macro Banco A/B
+        {
+            let want_bank = p.bank.value().clamp(0, 1) as usize;
+            if want_bank != self.pattern_bank {
+                self.pattern_bank = want_bank;
+                // Saltar al primer slot del banco si el patrón activo está en el otro
+                let cur = p.pattern.value().clamp(0, 31) as usize;
+                if cur / 16 != want_bank {
+                    let target = want_bank * 16;
+                    let n = self.model.with(snap, |s| s.select_pattern(target));
+                    apply_snap(setter, p, n);
+                    set(setter, &p.pattern, target as i32);
+                }
+            }
+        }
+        // Macro pestaña GUI (Perform / Library / Pads / Step)
+        {
+            let want_tab = p.ui_tab.value().clamp(0, 3) as usize;
+            if want_tab != self.tab {
+                self.tab = want_tab;
+                if want_tab == 1 {
+                    self.lib_ensure_listing();
+                }
+            }
+        }
+        // Macros botón Generar / Regenerar (rising edge)
+        {
+            let gen = p.generate.value();
+            if gen && !self.prev_generate {
+                self.do_generate(setter, p);
+                self.status = "Generar (macro)".into();
+            }
+            self.prev_generate = gen;
+
+            let regen = p.regenerate.value();
+            if regen && !self.prev_regenerate {
+                let snap = p.snap();
+                let n = self.model.with(snap, |s| s.reroll(snap, true));
+                apply_snap(setter, p, n);
+                self.status = "Regenerar (macro)".into();
+            }
+            self.prev_regenerate = regen;
+        }
+        let view = self.view(p.snap());
+        // Mantener params alineados si el estado cambió por otra vía
+        if p.pattern.value() != view.pattern_active as i32 {
+            set(setter, &p.pattern, view.pattern_active as i32);
+        }
+        if p.bank.value() != self.pattern_bank as i32 {
+            set(setter, &p.bank, self.pattern_bank as i32);
+        }
+        if p.ui_tab.value() != self.tab as i32 {
+            set(setter, &p.ui_tab, self.tab as i32);
+        }
         self.push_mk3_leds(&view, p);
         // drum machine: estado cargado por el host y mapa de notas actual (barato; sin audio)
         self.kit.pull_persisted();
@@ -868,6 +1039,17 @@ impl Gui {
                 m.set_enabled(!mk3_on);
             }
         }
+        let leds_script = p.mk3_leds_to_script.value();
+        if button(
+            ui,
+            cv,
+            &mut f,
+            "mk3leds",
+            if leds_script { "LEDs a script si" } else { "LEDs a script no" },
+            leds_script,
+        ) {
+            set(setter, &p.mk3_leds_to_script, !leds_script);
+        }
         if button(ui, cv, &mut f, "btn_help", if self.show_help { "Ayuda si" } else { "Ayuda" }, self.show_help) {
             self.show_help = !self.show_help;
         }
@@ -1029,6 +1211,7 @@ impl Gui {
                         let snap = p.snap();
                         let n = self.model.with(snap, |s| s.select_pattern(idx));
                         apply_snap(setter, p, n);
+                        set(setter, &p.pattern, idx as i32);
                         // sincronizar banco visible con el elegido
                         self.pattern_bank = idx / 16;
                         self.status = format!("Patron {}{}", if idx < 16 { "A" } else { "B" }, (idx % 16) + 1);
@@ -1230,7 +1413,7 @@ impl Gui {
 
                 let selected = self.sel_pad == q;
                 let muted = p.pads[q].mute.value();
-                let solo = st.pads[q].solo;
+                let solo = p.pads[q].solo.value();
                 let n_samples = lib.bank(q, st.bank_cap).len();
 
                 // sombra
@@ -1291,11 +1474,12 @@ impl Gui {
                     self.status = format!("{} {}", name, if !muted { "MUTE" } else { "unmute" });
                 }
                 if resp.middle_clicked() {
-                    // clic medio → solo
-                    self.kit.edit(|k| k.pads[q].solo = !k.pads[q].solo);
-                    let solo = self.kit.snapshot().pads[q].solo;
+                    // clic medio → solo (parámetro automatizable / macro Bitwig)
+                    let was = p.pads[q].solo.value();
+                    set(setter, &p.pads[q].solo, !was);
+                    self.kit.edit(|k| k.pads[q].solo = !was);
                     self.sel_pad = q;
-                    self.status = format!("{} {}", name, if solo { "SOLO" } else { "unsolo" });
+                    self.status = format!("{} {}", name, if !was { "SOLO" } else { "unsolo" });
                 }
             }
         }
@@ -1978,6 +2162,12 @@ impl Gui {
                 Err(e) => e,
             };
         }
+        if button(ui, cv, &mut f, "exportwav", "Exportar .wav", false) {
+            self.status = match self.export_pattern_wav(p) {
+                Ok(path) => format!("Audio guardado en {}", path.display()),
+                Err(e) => e,
+            };
+        }
         if button(ui, cv, &mut f, "openfolder", "Abrir carpeta", view.has_last_export) {
             self.status = match caja_core::paths::export_dir() {
                 Some(d) => match caja_core::paths::open_folder(&d) {
@@ -1993,6 +2183,91 @@ impl Gui {
             f.y += h + GAP;
         }
         f.y + GAP
+    }
+
+    /// Renderiza un bucle del patrón offline y lo guarda como WAV 16-bit estéreo.
+    /// Usa las muestras ya cargadas en el kit; si un pad no tiene sample, ese golpe se omite.
+    fn export_pattern_wav(&self, p: &CajaParams) -> Result<std::path::PathBuf, String> {
+        use crate::dsp::Engine;
+        use crate::sample::write_wav_pcm16;
+        use crate::store::NO_PAD;
+        use caja_core::timing::PPQ;
+
+        const SR: f32 = 44100.0;
+        let snap = p.snap();
+        let bpm = f64::from(snap.bpm).max(20.0);
+        let (loop_ticks, hits) = self.model.with(snap, |s| s.hits());
+        if hits.is_empty() {
+            return Err("El patrón no tiene golpes para exportar.".into());
+        }
+
+        let samples_per_tick = (60.0 / bpm) * f64::from(SR) / f64::from(PPQ);
+        let total_frames = ((f64::from(loop_ticks) * samples_per_tick).ceil() as usize)
+            .max(1)
+            .saturating_add((SR * 0.5) as usize); // cola para decays
+
+        let mut engine = Engine::new(SR);
+        let mut mute = [false; NUM_PADS];
+        let mut solo = [false; NUM_PADS];
+        let mut pan = [0.0f32; NUM_PADS];
+        let mut gain = [1.0f32; NUM_PADS];
+        let mut rate = [0u8; NUM_PADS];
+        let mut host = [(0u32, 0u8, 0u8); NUM_PADS];
+        for pad in 0..NUM_PADS {
+            let pp = &p.pads[pad];
+            mute[pad] = pp.mute.value();
+            solo[pad] = pp.solo.value();
+            pan[pad] = pp.pan.value();
+            gain[pad] = pp.gain.value().clamp(0.0, 2.0);
+            rate[pad] = pp.rate.value().clamp(0, 3) as u8;
+            let live = pp.live();
+            host[pad] = (live.seed, live.slot, live.mode);
+        }
+        engine.set_mixer(&mute, &solo, &pan, &gain, &rate);
+
+        let kit_audio = self.kit.audio.latest().clone();
+        engine.begin_block(&kit_audio, &host);
+
+        let hit_frames: Vec<(usize, usize, f32)> = hits
+            .iter()
+            .filter_map(|h| {
+                let f = (f64::from(h.tick) * samples_per_tick).round() as usize;
+                let pad = self.kit.note_pad[usize::from(h.note)].load(Ordering::Relaxed);
+                if pad == NO_PAD {
+                    return None;
+                }
+                Some((f, usize::from(pad), f32::from(h.vel) / 127.0))
+            })
+            .collect();
+
+        let mut left = vec![0.0f32; total_frames];
+        let mut right = vec![0.0f32; total_frames];
+        let block = 512usize;
+        let mut hit_idx = 0usize;
+        let mut frame = 0usize;
+        let store = &self.kit.store;
+
+        while frame < total_frames {
+            let end = (frame + block).min(total_frames);
+            while hit_idx < hit_frames.len() && hit_frames[hit_idx].0 < end {
+                let (hf, pad, vel) = hit_frames[hit_idx];
+                if hf >= frame {
+                    let song_beats = (hf as f64) * bpm / (f64::from(SR) * 60.0);
+                    engine.trigger(pad, vel, &kit_audio, store, song_beats);
+                }
+                hit_idx += 1;
+            }
+            engine.render(&mut left[frame..end], &mut right[frame..end]);
+            for i in frame..end {
+                left[i] = left[i].tanh();
+                right[i] = right[i].tanh();
+            }
+            frame = end;
+        }
+
+        let bytes = write_wav_pcm16(SR as u32, &left, Some(&right));
+        let genre_id = self.model.with(snap, |s| s.genres.get(s.genre_index(&snap)).id.clone());
+        caja_core::paths::export_wav(&genre_id, snap.bpm, &snap.seed.to_string(), &bytes)
     }
 
     // ───────────────────────── historial ─────────────────────────

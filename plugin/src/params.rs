@@ -104,6 +104,21 @@ pub struct CajaParams {
     /// mientras dure el clip (y 1 compás después). No actúa en el modo "Con una tecla".
     #[id = "clipprio"]
     pub clip_prio: BoolParam,
+    /// Índice del patrón activo (0..31 = A1–A16, B1–B16). Asignable a macros de Bitwig.
+    #[id = "pattern"]
+    pub pattern: IntParam,
+    /// Banco de patrones visible: 0 = A (1–16), 1 = B (17–32). Macro Bitwig.
+    #[id = "bank"]
+    pub bank: IntParam,
+    /// Pestaña de la GUI: 0=Perform, 1=Library, 2=Pads, 3=Step. Macro Bitwig.
+    #[id = "uitab"]
+    pub ui_tab: IntParam,
+    /// Trigger (rising edge): generar patrón desde la frase. Macro botón Bitwig.
+    #[id = "gen"]
+    pub generate: BoolParam,
+    /// Trigger (rising edge): regenerar con la misma frase. Macro botón Bitwig.
+    #[id = "regen"]
+    pub regenerate: BoolParam,
     /// Por pad (orden de `PAD_ORDER`, n = 1..25): `padseed_n`, `padslot_n`, `padmode_n`.
     /// Automatizar la semilla o el slot produce SALTOS entre sonidos, no transiciones.
     #[nested(array)]
@@ -121,6 +136,10 @@ pub struct CajaParams {
     /// Puente Maschine Mikro MK3 (Pattern/Rack + LEDs). Off si usas el script Bitwig.
     #[id = "mk3"]
     pub mk3_enabled: BoolParam,
+    /// Exporta el estado de los 16 pads a `/tmp/caja-leds.json` para el script de Bitwig
+    /// (preferencia "CAJA LED Bridge"). Usar con "MK3 nativo = No".
+    #[id = "mk3leds"]
+    pub mk3_leds_to_script: BoolParam,
 }
 
 /// Parámetros automatizables de un pad. IDs estables: `padseed_{n}`, `padslot_{n}`, `padmode_{n}`
@@ -139,6 +158,9 @@ pub struct PadParams {
     /// Mute del pad (asignable a macros de Bitwig). `padmute_{n}`.
     #[id = "padmute"]
     pub mute: BoolParam,
+    /// Solo del pad (asignable a macros de Bitwig). `padsolo_{n}`.
+    #[id = "padsolo"]
+    pub solo: BoolParam,
     /// Paneo del pad, -1 (izq) .. +1 (der). `padpan_{n}`. Se aplica al disparar cada golpe.
     #[id = "padpan"]
     pub pan: FloatParam,
@@ -160,24 +182,48 @@ impl PadParams {
         let d = PadLive::default_for(pad);
         let no_smooth = |p: IntParam| p.with_smoother(SmoothingStyle::None);
         let rate_labels = ["golpe", "1 compas", "2 compases", "4 compases"];
+        // Nombres con índice para macros de Bitwig (P1..P25).
+        let n = pad + 1;
         PadParams {
-            seed: no_smooth(IntParam::new("Semilla pad", d.seed as i32, IntRange::Linear { min: 0, max: SEED_MAX as i32 })),
-            slot: no_smooth(IntParam::new("Slot", i32::from(d.slot), IntRange::Linear { min: 0, max: SLOTS as i32 - 1 }).with_value_to_string(Arc::new(|v| (v + 1).to_string())).with_string_to_value(Arc::new(|s| s.trim().parse::<i32>().ok().map(|n| n - 1)))),
-            mute: BoolParam::new("Mute", false),
-            pan: FloatParam::new("Pan", 0.0, FloatRange::Linear { min: -1.0, max: 1.0 }).with_step_size(0.01),
-            gain: FloatParam::new("Ganancia", 1.0, FloatRange::Linear { min: 0.0, max: 2.0 }).with_step_size(0.01)
-                .with_unit(" x")
-                .with_value_to_string(Arc::new(|v| {
-                    if v <= 0.0001 {
-                        "-inf dB".to_string()
-                    } else {
-                        format!("{:.1} dB", 20.0 * v.log10())
-                    }
-                })),
-            save: BoolParam::new("Guardar en slot", false),
+            seed: no_smooth(IntParam::new(
+                format!("P{n} Semilla"),
+                d.seed as i32,
+                IntRange::Linear { min: 0, max: SEED_MAX as i32 },
+            )),
+            slot: no_smooth(
+                IntParam::new(
+                    format!("P{n} Slot"),
+                    i32::from(d.slot),
+                    IntRange::Linear { min: 0, max: SLOTS as i32 - 1 },
+                )
+                .with_value_to_string(Arc::new(|v| (v + 1).to_string()))
+                .with_string_to_value(Arc::new(|s| s.trim().parse::<i32>().ok().map(|x| x - 1))),
+            ),
+            mute: BoolParam::new(format!("P{n} Mute"), false),
+            solo: BoolParam::new(format!("P{n} Solo"), false),
+            pan: FloatParam::new(
+                format!("P{n} Pan"),
+                0.0,
+                FloatRange::Linear { min: -1.0, max: 1.0 },
+            )
+            .with_step_size(0.01),
+            gain: FloatParam::new(
+                format!("P{n} Gain"),
+                1.0,
+                FloatRange::Linear { min: 0.0, max: 2.0 },
+            )
+            .with_step_size(0.01)
+            .with_unit(" x")
+            .with_value_to_string(Arc::new(|v| {
+                if v <= 0.0001 {
+                    "-inf dB".to_string()
+                } else {
+                    format!("{:.1} dB", 20.0 * v.log10())
+                }
+            })),
+            save: BoolParam::new(format!("P{n} Guardar slot"), false),
             rate: no_smooth(
-                // Por defecto: re-sorteo cada 4 compases (el usuario puede bajar a golpe/1c/2c).
-                IntParam::new("Ritmo ROLL", 3, IntRange::Linear { min: 0, max: 3 })
+                IntParam::new(format!("P{n} Ritmo ROLL"), 3, IntRange::Linear { min: 0, max: 3 })
                     .with_value_to_string(Arc::new(move |v| rate_labels[v.clamp(0, 3) as usize].to_string()))
                     .with_string_to_value(Arc::new(|s| match s.trim().to_lowercase().as_str() {
                         "golpe" | "0" | "rapido" | "rápido" => Some(0),
@@ -187,7 +233,15 @@ impl PadParams {
                         _ => None,
                     })),
             ),
-            mode: no_smooth(IntParam::new("Modos", i32::from(d.mode), IntRange::Linear { min: 0, max: 15 }).with_value_to_string(Arc::new(|v| mode_text(v as u8))).with_string_to_value(Arc::new(parse_mode))),
+            mode: no_smooth(
+                IntParam::new(
+                    format!("P{n} Modos"),
+                    i32::from(d.mode),
+                    IntRange::Linear { min: 0, max: 15 },
+                )
+                .with_value_to_string(Arc::new(|v| mode_text(v as u8)))
+                .with_string_to_value(Arc::new(parse_mode)),
+            ),
         }
     }
 
@@ -288,12 +342,75 @@ impl CajaParams {
             dm_only: BoolParam::new("Solo drum machine", false),
             clip_prio: BoolParam::new("Prioridad al clip", true),
             master: FloatParam::new("Volumen", 0.0, FloatRange::Linear { min: -24.0, max: 6.0 }).with_unit(" dB").with_step_size(0.1),
+            pattern: IntParam::new("Patron activo", 0, IntRange::Linear { min: 0, max: 31 })
+                .with_smoother(SmoothingStyle::None)
+                .with_value_to_string(Arc::new(|v| {
+                    let v = v.clamp(0, 31) as usize;
+                    let bank = if v < 16 { "A" } else { "B" };
+                    format!("{bank}{}", (v % 16) + 1)
+                }))
+                .with_string_to_value(Arc::new(|s| {
+                    let s = s.trim().to_uppercase();
+                    if let Ok(n) = s.parse::<i32>() {
+                        return Some(n.clamp(0, 31));
+                    }
+                    // "A1".."A16", "B1".."B16"
+                    if s.len() >= 2 {
+                        let bank = match s.chars().next() {
+                            Some('A') => 0,
+                            Some('B') => 16,
+                            _ => return None,
+                        };
+                        if let Ok(slot) = s[1..].parse::<i32>() {
+                            if (1..=16).contains(&slot) {
+                                return Some(bank + slot - 1);
+                            }
+                        }
+                    }
+                    None
+                })),
+            bank: IntParam::new("Banco", 0, IntRange::Linear { min: 0, max: 1 })
+                .with_smoother(SmoothingStyle::None)
+                .with_value_to_string(Arc::new(|v| if v == 0 { "A".into() } else { "B".into() }))
+                .with_string_to_value(Arc::new(|s| match s.trim().to_uppercase().as_str() {
+                    "A" | "0" => Some(0),
+                    "B" | "1" => Some(1),
+                    _ => None,
+                })),
+            ui_tab: IntParam::new("Pestana", 0, IntRange::Linear { min: 0, max: 3 })
+                .with_smoother(SmoothingStyle::None)
+                .with_value_to_string(Arc::new(|v| {
+                    match v.clamp(0, 3) {
+                        0 => "Perform".into(),
+                        1 => "Library".into(),
+                        2 => "Pads".into(),
+                        _ => "Step".into(),
+                    }
+                }))
+                .with_string_to_value(Arc::new(|s| {
+                    match s.trim().to_lowercase().as_str() {
+                        "perform" | "patron" | "pattern" | "0" => Some(0),
+                        "library" | "libreria" | "biblioteca" | "1" => Some(1),
+                        "pads" | "kit" | "2" => Some(2),
+                        "step" | "rack" | "3" => Some(3),
+                        _ => None,
+                    }
+                })),
+            generate: BoolParam::new("Generar", false),
+            regenerate: BoolParam::new("Regenerar", false),
             pads: std::array::from_fn(PadParams::new),
             palette: EnumParam::new("Paleta", PaletteParam::Arcade),
             text_size: EnumParam::new("Tamano de texto", TextSizeParam::Small),
             dark: BoolParam::new("Modo oscuro", true),
             scanlines: BoolParam::new("Scanlines", true),
             mk3_enabled: BoolParam::new("MK3 nativo", true)
+                .with_value_to_string(Arc::new(|v| if v { "Si".into() } else { "No".into() }))
+                .with_string_to_value(Arc::new(|s| match s.trim().to_lowercase().as_str() {
+                    "si" | "sí" | "on" | "1" => Some(true),
+                    "no" | "off" | "0" => Some(false),
+                    _ => None,
+                })),
+            mk3_leds_to_script: BoolParam::new("MK3 LEDs a script", false)
                 .with_value_to_string(Arc::new(|v| if v { "Si".into() } else { "No".into() }))
                 .with_string_to_value(Arc::new(|s| match s.trim().to_lowercase().as_str() {
                     "si" | "sí" | "on" | "1" => Some(true),

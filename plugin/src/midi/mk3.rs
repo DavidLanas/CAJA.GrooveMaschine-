@@ -71,10 +71,16 @@ impl Mk3Mode {
 #[derive(Clone, Copy, Debug)]
 pub enum Mk3Cmd {
     SelectPattern(u8), RackBarDelta(i8), SelectRow(u8), ToggleStep { piece: u8, step: u8 }, ToggleGhost { step: u8 },
-    SetMode(Mk3Mode), SetBank(u8), BpmDelta(i8), MasterDelta(i8), SwingDelta(i8), AccentDelta(i8), HumanDelta(i8),
+    SetMode(Mk3Mode), SetBank(u8), BpmDelta(i8), MasterDelta(i8), SwingDelta(i8), AccentDelta(i8), HumanDelta(i8), DensityDelta(i8),
     SelectCell(usize), CellVolAbsolute(u8), CellPanDelta(i8), ToggleCellMute(usize), SamplesDice(usize), SamplesSave(usize),
     ToggleCellLockBit(usize, u8), GlobalAction(u8), OpenExplorer, LibrarySetting(usize, u8), ShiftPadAction(usize),
     ToggleShowAll, ToggleSuggestions, FocusPhrase, SelectGenre(usize),
+    /// Navegador de carpetas en modo Library: delta del encoder.
+    LibBrowse(i8),
+    /// Confirmar carpeta (encoder press o PLUGIN en Library).
+    LibEnter,
+    /// Ciclo del botón SWING: 0=off, 1=Swing, 2=Acento, 3=Humanize, 4=Densidad.
+    SwingModeSet(u8),
 }
 
 #[derive(Clone, Copy, Debug)]
@@ -92,6 +98,8 @@ pub struct Mk3Bridge {
     enc_mode: u8, swing_mode: u8, selected_cell: usize, cell_offset: usize, dice_pad: Option<usize>,
     pub fixed_vel: bool, genre_pad_mode: bool, genre_page: usize,
     cmds: Mutex<VecDeque<Mk3Cmd>>, out: Mutex<VecDeque<Mk3Out>>, last_pads: [u8; 16], last_buttons: [u8; 12],
+    /// Contador de cambios de pads (para el LED bridge del script Bitwig).
+    pub led_seq: u64,
 }
 
 impl Default for Mk3Bridge {
@@ -102,6 +110,7 @@ impl Default for Mk3Bridge {
             fixed_vel: false, genre_pad_mode: false, genre_page: 0,
             cmds: Mutex::new(VecDeque::with_capacity(64)), out: Mutex::new(VecDeque::with_capacity(64)),
             last_pads: [0xff; 16], last_buttons: [0xff; 12],
+            led_seq: 0,
         }
     }
 }
@@ -120,15 +129,24 @@ impl Mk3Bridge {
     }
     pub fn mode(&self) -> Mk3Mode { self.mode }
     pub fn pattern_bank(&self) -> u8 { self.pattern_bank }
-    pub fn set_enabled(&mut self, on: bool) { self.enabled = on; if !on { self.queue_all_pads_off(); } }
-    fn queue_all_pads_off(&mut self) {
-        if let Ok(mut q) = self.out.lock() {
-            for (i, &note) in PAD_NOTES.iter().enumerate() { q.push_back(Mk3Out::PadLed { note, color: led::OFF }); self.last_pads[i] = led::OFF; }
+    /// Colores actuales de los 16 pads (para el LED bridge del script Bitwig).
+    pub fn pad_colors(&self) -> [u8; 16] { self.last_pads }
+    pub fn set_enabled(&mut self, on: bool) {
+        self.enabled = on;
+        // Solo apaga por MIDI; los colores se siguen calculando para el bridge.
+        if !on {
+            if let Ok(mut q) = self.out.lock() {
+                for (i, &note) in PAD_NOTES.iter().enumerate() {
+                    q.push_back(Mk3Out::PadLed { note, color: led::OFF });
+                }
+            }
         }
     }
 
+    /// Calcula los colores de pads a partir del estado. Siempre actualiza `last_pads`
+    /// (aunque `enabled` sea false) para el LED bridge. Solo encola eventos MIDI si
+    /// el modo nativo está activo.
     pub fn update_leds(&mut self, st: &Mk3LedState) {
-        if !self.enabled { return; }
         let mut pad_colors = [led::OFF; 16];
         match st.mode {
             Mk3Mode::Perform => {
@@ -171,11 +189,28 @@ impl Mk3Bridge {
             Mk3Mode::Library => { pad_colors.fill(led::DIM); }
         }
 
+        let mut changed = false;
+        for i in 0..16 {
+            if pad_colors[i] != self.last_pads[i] {
+                self.last_pads[i] = pad_colors[i];
+                changed = true;
+            }
+        }
+        if changed {
+            self.led_seq = self.led_seq.wrapping_add(1);
+        }
+
+        // Solo encola MIDI si el modo nativo está activo.
+        if !self.enabled { return; }
+
         if let Ok(mut q) = self.out.lock() {
-            for i in 0..16 {
-                if pad_colors[i] != self.last_pads[i] {
+            // Solo reenvía pads que cambiaron (last_pads ya está actualizado arriba).
+            // Para no spamear, comparamos con una copia previa… pero last_pads ya
+            // es el nuevo valor; usamos `changed` a nivel de frame: si algo cambió
+            // reenviamos todos los pads (más simple y el host suele tolerarlo).
+            if changed {
+                for i in 0..16 {
                     q.push_back(Mk3Out::PadLed { note: PAD_NOTES[i], color: pad_colors[i] });
-                    self.last_pads[i] = pad_colors[i];
                 }
             }
             let mode_leds: [(u8, u8); 7] = [
@@ -230,15 +265,19 @@ impl Mk3Bridge {
                 let raw = if value >= 65 { value as i16 - 128 } else { value as i16 };
                 let inc = (-raw).clamp(-8, 8) as i8;
                 if inc == 0 { return; }
-                
-                if self.mode == Mk3Mode::Samples {
+
+                if self.mode == Mk3Mode::Library {
+                    self.push(Mk3Cmd::LibBrowse(inc));
+                } else if self.mode == Mk3Mode::Samples {
                     if self.enc_mode == 2 { self.push(Mk3Cmd::MasterDelta(inc)); }
                     else { self.push(Mk3Cmd::CellPanDelta(inc)); }
                 } else if self.swing_mode > 0 {
+                    // 1=Swing 2=Acento 3=Humanize 4=Densidad
                     match self.swing_mode {
                         1 => self.push(Mk3Cmd::SwingDelta(inc)),
                         2 => self.push(Mk3Cmd::AccentDelta(inc)),
                         3 => self.push(Mk3Cmd::HumanDelta(inc)),
+                        4 => self.push(Mk3Cmd::DensityDelta(inc)),
                         _ => {}
                     }
                 } else {
@@ -246,13 +285,29 @@ impl Mk3Bridge {
                     else { self.push(Mk3Cmd::BpmDelta(inc)); }
                 }
             }
+            // Encoder press (CC 59 en el Mikro / script Linux)
+            59 if press => {
+                if self.mode == Mk3Mode::Library {
+                    self.push(Mk3Cmd::LibEnter);
+                }
+            }
             CC_SHIFT => self.shift = press,
             CC_SELECT => self.select = press,
-            CC_SWING if press => { self.swing_mode = (self.swing_mode + 1) % 4; }
+            // Ciclo: off → Swing → Acento → Humanize → Densidad → off
+            CC_SWING if press => {
+                self.swing_mode = (self.swing_mode + 1) % 5;
+                self.push(Mk3Cmd::SwingModeSet(self.swing_mode));
+            }
             CC_KEYBOARD if press => { self.mode = Mk3Mode::Mixer; self.push(Mk3Cmd::SetMode(Mk3Mode::Mixer)); }
             CC_CHORDS if press => { self.mode = Mk3Mode::Samples; self.push(Mk3Cmd::SetMode(Mk3Mode::Samples)); }
             CC_SAMPLING if press => { self.mode = Mk3Mode::Library; self.push(Mk3Cmd::SetMode(Mk3Mode::Library)); }
-            CC_PLUGIN if press => self.push(Mk3Cmd::OpenExplorer),
+            CC_PLUGIN if press => {
+                if self.mode == Mk3Mode::Library {
+                    self.push(Mk3Cmd::LibEnter);
+                } else {
+                    self.push(Mk3Cmd::OpenExplorer);
+                }
+            }
             CC_SLIDER if self.mode == Mk3Mode::Mixer => self.push(Mk3Cmd::CellVolAbsolute(value)),
             CC_FIXED_VEL if press => { self.fixed_vel = !self.fixed_vel; },
             CC_STAR if press => self.push(Mk3Cmd::ToggleSuggestions),

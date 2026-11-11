@@ -193,6 +193,25 @@ pub fn export_midi(genre_id: &str, bpm: i32, seed: &str, bytes: &[u8]) -> Result
     export_to(&dir, genre_id, bpm, seed, bytes)
 }
 
+/// Guarda como `genero-bpm-semilla.wav` (si existe, añade -2, -3...).
+pub fn export_wav_to(dir: &Path, genre_id: &str, bpm: i32, seed: &str, bytes: &[u8]) -> Result<PathBuf, String> {
+    fs::create_dir_all(dir).map_err(|e| format!("no se pudo crear {}: {e}", dir.display()))?;
+    let base = safe_file_name(&format!("{genre_id}-{bpm}-{seed}"));
+    let mut path = dir.join(format!("{base}.wav"));
+    let mut n = 2;
+    while path.exists() {
+        path = dir.join(format!("{base}-{n}.wav"));
+        n += 1;
+    }
+    fs::write(&path, bytes).map_err(|e| format!("no se pudo escribir {}: {e}", path.display()))?;
+    Ok(path)
+}
+
+pub fn export_wav(genre_id: &str, bpm: i32, seed: &str, bytes: &[u8]) -> Result<PathBuf, String> {
+    let dir = export_dir().ok_or("no encuentro la carpeta Documentos")?;
+    export_wav_to(&dir, genre_id, bpm, seed, bytes)
+}
+
 /// Abre una carpeta con el explorador del sistema.
 pub fn open_folder(path: &Path) -> Result<(), String> {
     let _ = fs::create_dir_all(path);

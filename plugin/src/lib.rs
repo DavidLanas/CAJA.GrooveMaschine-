@@ -201,12 +201,14 @@ impl Plugin for Caja {
             *h = (l.seed, l.slot, l.mode);
         }
         let mut mute = [false; caja_core::kit::NUM_PADS];
+        let mut solo = [false; caja_core::kit::NUM_PADS];
         let mut pan = [0.0f32; caja_core::kit::NUM_PADS];
         let mut gain = [1.0f32; caja_core::kit::NUM_PADS];
         let mut rate = [0u8; caja_core::kit::NUM_PADS];
         for pad in 0..caja_core::kit::NUM_PADS {
             let pp = &self.params.pads[pad];
             mute[pad] = pp.mute.value();
+            solo[pad] = pp.solo.value();
             pan[pad] = pp.pan.value();
             gain[pad] = pp.gain.value().clamp(0.0, 2.0);
             rate[pad] = pp.rate.value().clamp(0, 3) as u8;
@@ -216,7 +218,7 @@ impl Plugin for Caja {
             }
             self.prev_save[pad] = save;
         }
-        self.engine.set_mixer(&mute, &pan, &gain, &rate);
+        self.engine.set_mixer(&mute, &solo, &pan, &gain, &rate);
         self.engine.begin_block(ka, &host);
 
         // 3. eventos de entrada (dentro de la capacidad reservada: no hay reservas)

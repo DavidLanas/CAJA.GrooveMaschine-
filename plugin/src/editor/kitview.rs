@@ -162,6 +162,110 @@ impl Gui {
         });
     }
 
+    /// Rellena `lib_entries` con subcarpetas (y "..") de `lib_browse_path`.
+    pub(super) fn lib_ensure_listing(&mut self) {
+        if self.lib_browse_path.is_empty() {
+            let st = self.kit.snapshot();
+            self.lib_browse_path = if !st.folder.is_empty() {
+                st.folder.clone()
+            } else {
+                std::env::var("HOME").unwrap_or_else(|_| "/".into())
+            };
+        }
+        self.lib_refresh_entries();
+    }
+
+    pub(super) fn lib_refresh_entries(&mut self) {
+        use std::fs;
+        use std::path::Path;
+        let path = Path::new(&self.lib_browse_path);
+        let mut entries: Vec<(String, bool)> = Vec::new();
+        if path.parent().is_some() {
+            entries.push(("..".into(), true));
+        }
+        if let Ok(rd) = fs::read_dir(path) {
+            let mut dirs: Vec<String> = Vec::new();
+            for e in rd.flatten() {
+                let Ok(ft) = e.file_type() else { continue };
+                if !ft.is_dir() {
+                    continue;
+                }
+                let name = e.file_name().to_string_lossy().into_owned();
+                if name.starts_with('.') {
+                    continue;
+                }
+                dirs.push(name);
+            }
+            dirs.sort_by(|a, b| a.to_lowercase().cmp(&b.to_lowercase()));
+            for d in dirs {
+                entries.push((d, true));
+            }
+        }
+        self.lib_entries = entries;
+        if self.lib_cursor >= self.lib_entries.len() {
+            self.lib_cursor = self.lib_entries.len().saturating_sub(1);
+        }
+    }
+
+    pub(super) fn lib_browse_delta(&mut self, delta: i8) {
+        self.lib_ensure_listing();
+        if self.lib_entries.is_empty() {
+            return;
+        }
+        let n = self.lib_entries.len() as i32;
+        let cur = self.lib_cursor as i32 + i32::from(delta.signum());
+        self.lib_cursor = ((cur % n) + n) as usize % n as usize;
+        if let Some((name, _)) = self.lib_entries.get(self.lib_cursor) {
+            self.status = format!("Libreria: {name}");
+        }
+    }
+
+    /// Encoder press / PLUGIN en Library: entra en la carpeta o la carga como samples.
+    pub(super) fn lib_browse_enter(&mut self) {
+        self.lib_ensure_listing();
+        let Some((name, is_dir)) = self.lib_entries.get(self.lib_cursor).cloned() else {
+            self.status = "Libreria: sin entradas".into();
+            return;
+        };
+        if !is_dir {
+            return;
+        }
+        use std::path::PathBuf;
+        let next = if name == ".." {
+            PathBuf::from(&self.lib_browse_path)
+                .parent()
+                .map(|p| p.to_path_buf())
+                .unwrap_or_else(|| PathBuf::from(&self.lib_browse_path))
+        } else {
+            PathBuf::from(&self.lib_browse_path).join(&name)
+        };
+        let next_s = next.to_string_lossy().into_owned();
+        // Si la carpeta tiene samples de audio, cargarla; si no, solo navegar.
+        let has_audio = std::fs::read_dir(&next).ok().map(|rd| {
+            rd.flatten().any(|e| {
+                let n = e.file_name().to_string_lossy().to_lowercase();
+                n.ends_with(".wav") || n.ends_with(".flac") || n.ends_with(".ogg") || n.ends_with(".aif") || n.ends_with(".aiff")
+            })
+        }).unwrap_or(false);
+
+        self.lib_browse_path = next_s.clone();
+        self.lib_cursor = 0;
+        self.lib_refresh_entries();
+
+        if has_audio || name != ".." {
+            // Cargar como carpeta de samples (también al entrar en subcarpetas con audio).
+            if has_audio {
+                self.path = next_s.clone();
+                self.apply_path();
+                self.status = format!("Samples cargados: {next_s}");
+            } else {
+                self.status = format!("Carpeta: {next_s}");
+            }
+        } else {
+            self.status = format!("Carpeta: {next_s}");
+        }
+    }
+
     // ───────────────────────────── Biblioteca ─────────────────────────────
 
     pub(super) fn library_view(&mut self, ui: &egui::Ui, cv: &Cv, _setter: &ParamSetter, _p: &CajaParams, left: f32, right: f32, y: f32) -> f32 {
@@ -200,6 +304,46 @@ impl Gui {
         y += bh + GAP;
         cv.text(pos2(left, y), Align2::LEFT_TOP, "Los samples son tuyos: el plugin solo guarda la ruta, nunca los copia.", cv.th.text_dim);
         y += cv.fs + GAP * 2.0;
+
+        // ── Navegador de carpetas (encoder MK3 en modo Library) ──
+        self.lib_ensure_listing();
+        cv.text(
+            pos2(left, y),
+            Align2::LEFT_TOP,
+            &format!("Navegar: {}  (encoder = mover, press/PLUGIN = entrar/cargar)", self.lib_browse_path),
+            cv.th.accent,
+        );
+        y += cv.fs + GAP;
+        let visible = 10usize;
+        let start = self.lib_cursor.saturating_sub(visible / 2);
+        let end = (start + visible).min(self.lib_entries.len());
+        for i in start..end {
+            let (name, _is_dir) = &self.lib_entries[i];
+            let on = i == self.lib_cursor;
+            let label = if name == ".." {
+                format!("[..]  padre")
+            } else {
+                format!("[DIR] {name}")
+            };
+            let color = if on { cv.th.accent } else { cv.th.text };
+            let h = cv.wrapped(pos2(left + if on { 8.0 } else { 0.0 }, y), right - left, &label, color);
+            if on {
+                // marca de cursor
+                cv.text(pos2(left, y), Align2::LEFT_TOP, ">", cv.th.accent);
+            }
+            // clic de ratón también selecciona / entra
+            let row_r = Rect::from_min_size(pos2(left, y), vec2(right - left, h.max(cv.fs)));
+            let resp = ui.interact(snap_rect(row_r), ui.id().with(format!("librow{i}")), Sense::click());
+            if resp.clicked() {
+                self.lib_cursor = i;
+                self.lib_browse_enter();
+            }
+            y += h + 2.0;
+        }
+        if self.lib_entries.is_empty() {
+            y += cv.wrapped(pos2(left, y), right - left, "(sin subcarpetas)", cv.th.text_dim) + GAP;
+        }
+        y += GAP;
 
         // ajustes
         let mut f = Flow::new(left, y, right);
